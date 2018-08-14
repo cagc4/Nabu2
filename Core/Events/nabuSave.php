@@ -34,7 +34,7 @@ include "../Class/TemplatePage.php";
 session_start();
 
 $objUtilities=$_SESSION['objUtilities'];
-$objTemplate =new TemplatePage($objUtilities);
+$objTemplate =new TemplatePage($objUtilities,'');
 $objTemplate->initTemplate($_SESSION['app'],'event');
     
 ?>

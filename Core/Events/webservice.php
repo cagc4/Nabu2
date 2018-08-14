@@ -41,16 +41,21 @@ if ( isset($_POST['token']) ){
 
         header('Content-type: application/json');
                 
-        $codigoemp =$_POST['codigoemp'];
-        $mensaje =$_POST['messa'];
-        $codigovalidacion =$_POST['codigovalidacion'];
-        $validacion =$_POST['validacion'];
-        $binds=explode(";",$_POST['binds']);
+        
+        //Parametros del AJAX
+        
+        $codigovalidacion =$_POST['sqlValidacion'];         // SQL Validacion debe retornar 0 = true  1 = false
+        $validacion =$_POST['funcionWS'];                   // Función en el webservice
+        $codigoemp =$_POST['codigoemp'];                    // Codigo empresa
+        $mensaje =$_POST['messa'];                          // Mensaje de Error
+        $binds=explode(";",$_POST['binds']);                // Parametros de entrada SQL
 
+        
         $objUtilities = new Utilities('localhost','nabu','6492496','nabu2');
         $database = $objUtilities->database;
 
         $bindEmp[0]=$codigoemp;
+        
         $sqlEmpresa = $database->getSqlStatement('nabu', 'nabuconnect', $bindEmp, "1");
         
         $empresa =$sqlEmpresa[0];
@@ -58,20 +63,16 @@ if ( isset($_POST['token']) ){
         $usuario =$sqlEmpresa[2];
         $password =$sqlEmpresa[3];
         $host =$sqlEmpresa[4];
-
+        
         $objUtilities = new Utilities($host, $usuario, $password, $bd);
         $database = $objUtilities->database;
 
         if ($codigovalidacion <> 'none')    
             $sql=$database->getSqlStatement($empresa,$codigovalidacion,$binds,"1");
-
+        
         switch ($validacion) {
-            case 'validarDuplicadooNoExistencia':
-                $result = validarDuplicadooNoExistencia($sql, $mensaje); break;
-            case 'validarExistencia':
-                $result = validarExistencia($sql, $mensaje); break;
-            case 'validarRelacionEntreRegistros':
-                $result = validarRelacionEntreRegistros($sql, $mensaje); break;
+            case 'validacionesWS':
+                $result = validacionesWS($sql[0], $mensaje); break;
             case 'getData':
                 $result = getData($database,$empresa,$binds); break;
             case 'getDataSelect':
@@ -82,6 +83,25 @@ if ( isset($_POST['token']) ){
 
     }
 }
+
+function validacionesWS($resultado, $mensaje){
+    
+    if ($resultado == 0 ){
+        $value = true;
+    } 
+    elseif ($resultado == 1){
+        $value = false;
+        $result["message"] =$mensaje;
+    } 
+    elseif ($resultado==NULL){
+        $value = false;
+        $result["message"] ="Error en la validacion";
+    } 
+	
+    $result["status"] =$value;
+	
+    return $result;
+ }
 
 function getData($database,$empresa,$binds){
     
@@ -150,80 +170,4 @@ function getDataSelect($objUtilities,$database,$empresa,$binds){
     return $jsonA;
     
 }
-
-
-function validarExistencia($sql, $mensaje){
-    
-    $count=$sql[0];
-    
-    if ($count >= 1){
-        $value = false;
-        $mensaje = "Error: Existe un registro con el dato ingresado: ".$mensaje;
-        $result["message"] =$mensaje;
-    } 
-    elseif ($sql==NULL){
-        $value = false;
-        $mensaje = "Error: No se pudo realizar la consulta a la bd.=";
-        $result["message"] =$mensaje;
-    } 
-    else{
-        $value = true;
-	}
-	
-    $result["status"] =$value;
-	
-    return $result;
- }
-
-
-function validarDuplicadooNoExistencia($sql, $mensaje){
-    
-    $count=$sql[0];
-    
-    if ($count == 0 ){
-        $value = false;
-        $mensaje = "Error: No existe: ".$mensaje;
-	    $result["message"] =$mensaje;
-    } 
-    elseif ($count > 1){
-        $value = false;
-        $mensaje = "Error: registro duplicado en BD: ".$mensaje;
-	    $result["message"] =$mensaje;
-    } 
-    elseif ($sql==NULL){
-        $value = false;
-        $mensaje = "Error al conectarse a la base de datos.";
-	    $result["message"] =$mensaje;
-    } 
-    else{
-        $value = true;
-	}
-	
-    $result["status"] =$value;
-	return $result;
- }
-
-
-function validarRelacionEntreRegistros($sql, $mensaje){
- 	
-    $count=$sql[0];
-
-    if ($count >= 1){
-        $value = false;
-        $mensaje = "Error: ".$mensaje;
-	    $result["message"] =$mensaje;
-    } 
-    elseif ($sql==NULL){
-        $value = false;
-        $mensaje = "Error: No se pudo realizar la consulta a la bd.=";
-	    $result["message"] =$mensaje;
-    } 
-    else{
-        $value = true;
-	}
-	
-    $result["status"] =$value;
-	return $result;
-}
-    
 ?>

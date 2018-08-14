@@ -30,11 +30,16 @@ THE SOFTWARE.
 
 */
     include "../Class/TemplatePage.php";
-    session_start();
 
-    $objUtilities=$_SESSION['objUtilities'];
-    $objTemplate =new TemplatePage($objUtilities);
-    $objTemplate->initTemplate('nabu','event');
+    session_start();
+    
+    $usuario=$_POST['nb_a_user_fld'];
+    $password=$_POST['nb_password_fld'];
+
+    $_SESSION['opridLogin'] = $usuario;
+    $_SESSION['menuString']='X';
+    
+    $objTemplate =new TemplatePage(NULL,$usuario);
 
 ?>
 

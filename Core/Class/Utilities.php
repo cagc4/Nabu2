@@ -790,59 +790,6 @@ class Utilities
         
     }
 
-    function validateLogin(){
-        
-       echo "<br><br><center><img src='../Images/error.png'><center>";
-
-        $empresa=$_POST['Campo0'];
-        $usuario=$_POST['Campo1'];
-        $password=$_POST['Campo2'];
-
-        $idPage=$_GET['p'];
-
-        $bind[0]=$empresa;
-        $enterprise=$this->database->getSqlStatement('nabu','0002',$bind,'1');
-
-        if (sizeof($enterprise) > 1){
-
-            $objUtilities = new Utilities($enterprise[0],$enterprise[2],$enterprise[3],$enterprise[1]);
-            $_SESSION['objUtilities']=$objUtilities;
-
-            $row=$objUtilities->database->validateUser($empresa,$usuario,$password); 
-
-            if ($row[0] != null) {
-                $_SESSION['app'] = $empresa;
-                $_SESSION['oprid'] = $row[0];
-                $_SESSION['role'] = $row[1];
-                $_SESSION['opridLogin'] = $usuario;
-                $_SESSION['menuString']='X';
-                header("location:../Pages/?p=home");
-            }
-            else{
-                unset($_SESSION['app']);
-                unset($_SESSION['oprid']);
-                unset($_SESSION['role']);
-                unset($_SESSION['opridLogin']);
-                unset($_SESSION['$menuString']);
-        ?>
-                <script languaje="javascript">
-                    notie.alert(3,'Error en autenticación de usuario',5);
-                    setTimeout ('document.location = "../Pages/nabu.php?p=login";',2000); 
-                </script> 
-        <?php        
-
-            }
-        }
-        else{
-        ?>  
-            <script languaje="javascript">
-                notie.alert(3,'Empresa no existe',5);
-                setTimeout ('document.location = "../Pages/nabu.php?p=login";',2000); 
-            </script> 
-        <?php        
-        }
-    }
-    
     function eventSave(){
         
         $accion=$_GET['accion'];

@@ -283,9 +283,15 @@ THE SOFTWARE.
             return $this->executeQuery($sql);   
         }
         
+        
         function getValidateRole($empresa,$idRole, $idpage){
             $sql = "select nb_id_role_fld,nb_id_page_fld from nabu2.nb_role_pag_tbl where nb_enterprise_id_fld='" . $empresa . "' and nb_id_role_fld = $idRole and nb_id_page_fld = '$idpage'";
             return $this->executeQueryOneRow($sql);   
+        }
+        
+        function validateUser($usuario){
+            $sql="SELECT nb_enterprise_id_fld,nb_id_user_fld,nb_id_role_fld from nabu2.nb_user_tbl WHERE nb_user_fld='".$usuario."' and nb_estado_fld='0' ";
+            return $this->executeQueryOneRow($sql);
         }
         
         function getPageProperties($empresa,$idpage){
@@ -301,11 +307,6 @@ THE SOFTWARE.
         function getPageAttribute($empresa,$idpage){
             $sql = "select c.nb_attribute_fld,c.nb_url_fld,c.nb_type_fld,c.nb_rel_fld ,c.nb_posicion_fld  from nabu2.nb_pages_tbl a,nabu2.nb_pageattribute_tbl b, nabu2.nb_htmlattribute_tbl c where   a.nb_type_page_fld = b.nb_type_page_fld and b.nb_id_attribute_fld = c.nb_id_attribute_fld and	a.nb_enterprise_id_fld ='$empresa' and 	a.nb_id_page_fld ='$idpage' order by b.nb_id_attribute_fld asc";
             return $this->executeQuery($sql);
-        }
-        
-        function validateUser($empresa,$usuario,$password){
-            $sql="SELECT nb_id_user_fld,nb_id_role_fld from nabu2.nb_user_tbl WHERE nb_enterprise_id_fld ='".$empresa."'  AND nb_user_fld='".$usuario."' AND nb_password_fld='".md5($password)."' and nb_estado_fld='0' ";
-            return $this->executeQueryOneRow($sql);
         }
         
         function getSchemaDescription($empresa,$idpage){

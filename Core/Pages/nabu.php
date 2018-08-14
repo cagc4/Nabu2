@@ -37,13 +37,13 @@ THE SOFTWARE.
     if($_GET['p'] == 'login'){
         session_start();
         session_unset();
-        $objTemplate =new TemplatePage(null);
+        $objTemplate =new TemplatePage(null,'');
         $objTemplate->initTemplate('nabu',$_GET['p']);
     }
 	else {
         session_start();
         if(isset($_SESSION['role']) and $_SESSION['role'] <>'') {
-            $objTemplate =new TemplatePage($_SESSION['objUtilities']);
+            $objTemplate =new TemplatePage($_SESSION['objUtilities'],'');
             if($objTemplate->objUtilities->validateRole($_SESSION['app'],$_GET['p'], $_SESSION['role'])){
                 $objTemplate->initTemplate($_SESSION['app'],$_GET['p']);
             }    

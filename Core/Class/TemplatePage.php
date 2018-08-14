@@ -13,11 +13,20 @@ class TemplatePage
     var $config;
     var $urlCurrent;
 
-	function TemplatePage($objUtilities){
+	function TemplatePage($objUtilities,$usuario){
 
         if (!isset ($objUtilities)){
             $this->objUtilities = new Utilities('localhost','nabu','6492496','nabu2');
             $_SESSION['objUtilities']=$this->objUtilities;
+            
+            if ($usuario <> ''){
+                $row=$this->objUtilities->database->validateUser($usuario);
+                $_SESSION['app']   = $row[0];
+                $_SESSION['oprid'] = $row[1];
+                $_SESSION['role']  = $row[2];
+                
+                $this->initTemplate($_SESSION['app'],'home');
+            }
         }
         else
             $this->objUtilities=$objUtilities;
@@ -27,14 +36,13 @@ class TemplatePage
     function initTemplate($empresa,$id_page){
         
         
-        
         $this->pageProperties=$this->objUtilities->pageProperties($empresa,$id_page);
         
         $this->pageAttribute=$this->objUtilities->pageAttribute($empresa,$id_page);
         $this->urlCurrent = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         
         
-        if ($id_page <> 'login' and $id_page <> 'event')
+        if ($id_page <> 'login')
             $this->menuPrincipal = new Menu($empresa,$this->objUtilities,$_SESSION['menuString']);
          
         
@@ -50,7 +58,7 @@ class TemplatePage
     }
 
     function contenido($empresa,$id_page){
-        
+  
 ?>        
         <!DOCTYPE html>
         <html lang="en">
@@ -70,7 +78,7 @@ class TemplatePage
 
           <body class="nav-md">
             
-             <?php if ($id_page <> 'login' and $id_page <> 'event'){ ?>  
+             <?php if ($id_page <> 'login'){ ?>  
              <div class="container body">
               <div class="main_container">     
             <?php }else{?>  
@@ -79,7 +87,7 @@ class TemplatePage
             <?php }?>
             
                   
-                <?php if ($id_page <> 'login' and $id_page <> 'event'){ ?>    
+                <?php if ($id_page <> 'login'){ ?>    
                 <div class="col-md-3 left_col">
                   <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
@@ -235,7 +243,7 @@ class TemplatePage
                 <div class="right_col" role="main">
                   <div class="">
                     <div class="page-title">
-                        <?php if ($id_page <> 'login' and $id_page <> 'event'){ ?> 
+                        <?php if ($id_page <> 'login'){ ?> 
                         <div class="title_left">
                         <h3></h3>
                         <?php }else{?>
@@ -271,9 +279,6 @@ class TemplatePage
                     if ($empresa=='')
                         $empresa='nabu';
         
-        
-                    
-                    
                     if ($this->tipo == 'alpaca' or $this->tipo == 'wizard'){
                         $schema=$this->objUtilities->getSchema($empresa,$id_page);
                         $options=$this->objUtilities->getOption($empresa,$id_page);
@@ -352,9 +357,6 @@ class TemplatePage
                         $this->objUtilities->charts($id_page);  
                     }
                     
-                    if ($this->tipo == 'event')
-                        $this->objUtilities->validateLogin();
-                    
                     ?>
 			             </div>
                           </div>
@@ -366,7 +368,7 @@ class TemplatePage
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <?php if ($id_page <> 'login' and $id_page <> 'event'){ ?>  
+                <?php if ($id_page <> 'login'){ ?>  
                 <footer>
                   <div class="pull-right">
                     Nabu 2018
