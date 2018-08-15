@@ -42,7 +42,7 @@ class TemplatePage
         $this->urlCurrent = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         
         
-        if ($id_page <> 'login')
+        if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg')
             $this->menuPrincipal = new Menu($empresa,$this->objUtilities,$_SESSION['menuString']);
          
         
@@ -78,7 +78,7 @@ class TemplatePage
 
           <body class="nav-md">
             
-             <?php if ($id_page <> 'login'){ ?>  
+             <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>  
              <div class="container body">
               <div class="main_container">     
             <?php }else{?>  
@@ -87,11 +87,11 @@ class TemplatePage
             <?php }?>
             
                   
-                <?php if ($id_page <> 'login'){ ?>    
+                <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>    
                 <div class="col-md-3 left_col">
                   <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                      <a href="?p=home" class="site_title"><i>N</i><span>&nbsp;&nbsp;<img src="../Images/logo.png" ></span></a>
+                      <a href="../Pages/nabu.php?p=home" class="site_title"><i>N</i><span>&nbsp;&nbsp;<img src="../Images/logo.png" ></span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -243,7 +243,7 @@ class TemplatePage
                 <div class="right_col" role="main">
                   <div class="">
                     <div class="page-title">
-                        <?php if ($id_page <> 'login'){ ?> 
+                        <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?> 
                         <div class="title_left">
                         <h3></h3>
                         <?php }else{?>
@@ -368,7 +368,7 @@ class TemplatePage
                 <!-- /page content -->
 
                 <!-- footer content -->
-                <?php if ($id_page <> 'login'){ ?>  
+                <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>  
                 <footer>
                   <div class="pull-right">
                     Nabu 2018

@@ -34,7 +34,7 @@ THE SOFTWARE.
     if( !isset($_GET['p']) )
         $_GET['p']='login';
 
-    if($_GET['p'] == 'login'){
+    if($_GET['p'] == 'login' or $_GET['p'] == 'nb_user_new_pg' or $_GET['p'] == 'nb_forg_pas_pg'){
         session_start();
         session_unset();
         $objTemplate =new TemplatePage(null,'');
@@ -43,7 +43,7 @@ THE SOFTWARE.
 	else {
         session_start();
         if(isset($_SESSION['role']) and $_SESSION['role'] <>'') {
-            $objTemplate =new TemplatePage($_SESSION['objUtilities'],'');
+            $objTemplate =new TemplatePage($_SESSION['objUtilities'],$_SESSION['opridLogin']);
             if($objTemplate->objUtilities->validateRole($_SESSION['app'],$_GET['p'], $_SESSION['role'])){
                 $objTemplate->initTemplate($_SESSION['app'],$_GET['p']);
             }    
