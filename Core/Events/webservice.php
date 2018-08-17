@@ -68,7 +68,7 @@ if ( isset($_POST['token']) ){
         $database = $objUtilities->database;
 
         if ($codigovalidacion <> 'none')    
-            $sql=$database->getSqlStatement($empresa,$codigovalidacion,$binds,"1");
+           $sql=$database->getSqlStatement($empresa,$codigovalidacion,$binds,"1");
         
         switch ($validacion) {
             case 'validacionesWS':
@@ -96,7 +96,8 @@ function validacionesWS($resultado, $mensaje){
     elseif ($resultado==NULL){
         $value = false;
         $result["message"] ="Error en la validacion";
-    } 
+    }
+     
 	
     $result["status"] =$value;
 	

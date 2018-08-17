@@ -247,6 +247,7 @@ class Utilities
         
         $ifcampos=false;
         
+        
         if (is_array($fields))
             $ifcampos=true;
         
@@ -363,7 +364,7 @@ class Utilities
             }
         }
         else
-        {
+        {  
             if($ifcampos)
                 $jsonA=$json->getDataSelect($this->database ,$table[0],$fields);
             else

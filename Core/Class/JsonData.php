@@ -74,15 +74,23 @@ class JsonData
 
     function getDataSelect($database, $table,$fields){
         
+       
         if (!isset($data))
             $data = array();
         
         $i=0;
-        foreach($fields as $field){
-            $value=$database->getDataValue($table,$field[0]);
-            $data[$field[0]] =$value[0];
+        
+        $values=$database->getDataValue($table);
+        
+        foreach($values as $value){
+            $j=1;
+            foreach($fields as $field){
+                $data[$i][str_replace('nb_','nb_'.$j.'_',$field[0])] =$value[$field[0]];
+                $j=$j+1;
+            }
             $i=$i+1;
         }
+        
         return $data;
     
     }

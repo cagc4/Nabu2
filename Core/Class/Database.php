@@ -81,18 +81,22 @@ THE SOFTWARE.
             $result = $this->db->Execute($sql);
             $rowResu = $result->FetchRow();
             $this->db=$this->cx->desconectar();
+            
             return $rowResu;
         }
         
         function getSqlStatement($empresa,$id,$bind,$type){
             
+            
             $sqlText="Select nb_sql_fld, nb_trace_fld from nabu2.nb_sqlText_tbl where nb_enterprise_id_fld='".$empresa."' and nb_sql_id_fld='".$id."'";
+            
             $sql=$this->executeQueryOneRow($sqlText);
             
             $sqlBinds=$sql[0];
             
             for ($i=0; $i<sizeof($bind); $i++)
                 $sqlBinds=str_replace ("bind[".$i."]",$bind[$i],$sqlBinds);
+            
             
             if ($sql[1] == 'true')
                 echo "<br> codigo =".$id." Sql=".$sqlBinds;
@@ -205,9 +209,9 @@ THE SOFTWARE.
             return $this->executeQueryOneRow($sql);             
         }
         
-        function getDataValue($table, $field){
-            $sql = "Select ".$field." from ".$table;
-            return $this->executeQueryOneRow($sql); 
+        function getDataValue($table){
+            $sql = "Select * from ".$table;
+            return $this->executeQuery($sql); 
         }
         
         function getPageLink($empresa,$idpage){

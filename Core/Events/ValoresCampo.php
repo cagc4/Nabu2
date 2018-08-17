@@ -70,7 +70,7 @@ session_start();
             
         }
         else
-            $sql="Select nb_id_value_fld,nb_value_fld from nabu.nb_value_tbl where nb_enterprise_id_fld ='".$empresa."' and nb_id_pr_schema_fld='".$campo."'";
+            $sql="Select nb_id_value_fld,nb_value_fld from nabu2.nb_value_tbl where nb_enterprise_id_fld ='".$empresa."' and nb_id_pr_schema_fld='".$campo."'";
 
         $rows=$database->executeQuery($sql);
         $rows_returned =  count($rows);

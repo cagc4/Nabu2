@@ -259,7 +259,9 @@ class TemplatePage
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                           <div class="x_title">
-                            <h2></h2>
+                            <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>   
+                              <h2><i class="fa fa-external-link-square"></i>&nbsp;&nbsp;<a href="?p=nb_categorias_v_pg">Visualización de Categorias</a></h2>
+                            <?php }?>  
                             <ul class="nav navbar-right panel_toolbox">
                               <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                               <li><a class=""><i class="fa fa-info-circle"></i></a></li>
