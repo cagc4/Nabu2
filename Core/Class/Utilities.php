@@ -64,37 +64,6 @@ class Utilities
 		}
 	}
     
-    function gridHeader($empresa,$page) {
-        
-        $headerSql = $this->database->getGridHeader($empresa, $page);
-        
-        
-        if (isset($_GET["idCabecera"])){
-            $idCabecera=$_GET["idCabecera"];
-            $bind[0]=$idCabecera;
-            $header=$this->database->getSqlStatement($empresa,$headerSql[0],$bind,'1');
-        }
-        
-        return $header[0];
-    }
-    
-    function reportPdf($empresa,$page) {
-        $filePdf = $this->database->reportPdf($empresa, $page);
-        return $filePdf[0];
-    }
-    
-    
-    function fileDatagrid($page){
-        $csv = new ExportExcel();
-        $sql = $this->database->tableDataGrid($_SESSION['app'],$page);
-        
-        $this->database->conectar();
-        $file=$csv->exportarFile($sql[0],$sql[1]);
-        $this->database->desconectar();
-        
-        return $file;
-    }
-    
     function castingDate($date){
     
        $fechaInicioF = split (' ', $date);
@@ -124,9 +93,6 @@ class Utilities
 
     function changeValue($field,$value) {
         
-        if ($value == 'nb_secuencia')
-            return $this->maxSequence ($field);
-        
         if  ($value == 'nb_userid')
             return 'NABU'; 
             
@@ -136,10 +102,6 @@ class Utilities
         return $value;
     }
     
-    function maxSequence($field){
-        $row = $this->database->getSequence($_SESSION['app'],$field);
-        return $row[0];
-    } 
     
     function addSysdate(){
         return (new \DateTime())->format('Y-m-d H:i:s');
@@ -152,6 +114,13 @@ class Utilities
     
     function pageProperties($empresa,$id){
         return $this->database->getPageProperties($empresa,$id);
+    }
+    
+    function getpagelink($page){
+        
+        $pageLink =$this->database->getPageLink($_SESSION['app'],$page);
+    
+        return $pageLink;
     }
     
     
@@ -426,7 +395,7 @@ class Utilities
 		}
         
         if ($alpaca == 'table'){
-			$json->addType($alpaca,'true');
+			$json->addType($alpaca,false);
             $fieldsA = array();
             $info = array();
         }
@@ -457,8 +426,27 @@ class Utilities
         
         if  ($alpaca == 'table'){
 			$json->addItems("fields",$fieldsA);
-            $info['emptyTable']=' ';
-            $json->addDatatables($info);
+            
+            $paginate['first']='Primero';
+            $paginate['last']='Último';
+            
+            $paginate['previous']='Atrás';
+            $paginate['next']='Siguiente';
+            
+            $info['paginate']=$paginate;
+            $info['emptyTable']='Sin datos para mostrar';
+            $info['search']='Buscar';
+            $info['lengthMenu']='Mostrar _MENU_ entradas';
+            $info['info']='<h5><p align=left>Mostrando del _START_ al _END_ de _TOTAL_ datos en total</p></h5>';
+            
+            
+            $extend['extend']='first';
+            $className['className']='copyButton';
+            
+            $buttons['buttons']=$extend;
+            $buttons['buttons']=$className;
+            
+            $json->addDatatables($info,$buttons);
 			unset($json->renderForm);
 			unset($json->fields);
 		}
@@ -613,189 +601,14 @@ class Utilities
 <?php        
     }
 
-    function getDataGrid($id){
-        
-        $g = new jqgrid();
-        //$g->debug=0;  No sacar error de SQL pero no lo podemos utilizar por que desde los trigger enviamos errores
-            
-        $pageL = $this->database->getPageLink($_SESSION['app'],$id);
-        $saveGrid = $this->database->gridSave($_SESSION['app'],$id);
-        
-        $type='gridoptions';
-        
-        $result = $this->database->getGrid1($_SESSION['app'],$type,$id);
-        
-        while ($row = $result->FetchRow()){
-            $value=$row[2];
-            
-            if ( $row[0] <> 'table' and  $row[0] <> 'where' ){
-                if ( $row[1] == 'number')
-                    $value= (int)$value;
-                
-                if ( $row[1] == 'boolean'){
-                    if ($value == 'true')
-                        $value= true;
-                     else
-                         $value= false;
-                }
-                
-                $grid[$row[0]] =$value;
-            }
-            
-
-            if ($row[0] == 'sql'){
-
-                if (isset($_GET["idCabecera"])){
-                    $idCabecera=$_GET["idCabecera"];
-                    if (!is_numeric($idCabecera))
-                        $idCabecera=0;
-                }
-                else
-                    $idCabecera=0;
-
-                    $value=str_replace('idDataGrid',$idCabecera,$value);
-                    $value=str_replace('operatorId',$_SESSION['opridLogin'],$value);
-		    $value=str_replace('oprId',$_SESSION['oprid'],$value);
-                    $g->select_command=$value;
-            }
-
-            if ($row[0] == 'table')
-                $g->table = $value;
-            
-        }
-
-        $campos = $this->database->getGrid2($_SESSION['app'],$id);
-        
-        $type='gridcoloptions';
-        $cols= array();
-        
-        while ($camposDescribe = $campos->FetchRow()){
-            $result = $this->database->getGrid3($_SESSION['app'],$type,$id,$camposDescribe[0]);
-            $col = array();
-            while ($row = $result->FetchRow()){
-                $value=$row[2];
-                
-                if ($row[0]=='link')
-                    $value="nabu.php?p=".$pageL[0]."&accion=b&".$value;
-                
-                if ($row[0]=='linkE')
-                    $row[0]='link';
-                
-                
-                if ($row[0]=='editrules' or $row[0]=='editoptions' or $row[0]=='formatoptions' or $row[0]=='show'){
-                    $rules=explode("?",$value);
-                    $value=array();
-                    foreach ($rules as $rule){
-                        $valores=explode("=>",$rule);
-                        $valoraux = $valores[1];
-
-			if($valores[0] == 'defaultValue' and $valoraux == 'oprId')
-				$valoraux = $_SESSION['oprid'];
-			
-			if($valores[0] == 'selectValues'){
-				#traer los valores campo
-				$valoresSelect = $this->database->executeQuery("select nb_value_fld, nb_id_value_fld from nabu.nb_value_tbl where nb_enterprise_id_fld ='".$_SESSION['app']."' and nb_id_pr_schema_fld='". $valoraux."'");
-				#$valoresSelect = array(array('1','1'),array('2','2'));
-				$valoraux = '';
-				foreach ($valoresSelect as $valor){
-					if($valoraux == '')
-						$valoraux .= $valor[1].':'.$valor[0];
-					else
-						$valoraux .= ';'.$valor[1].':'.$valor[0];
-				}
-				$valores[0] = 'value';
-			}
-
-                        if ($valoraux == 'true')
-                            $valoraux=true;
-                        elseif ($valoraux == 'false')
-                            $valoraux=false;
-                        
-                        if ($valoraux === 'idCabecera')
-                            $valoraux=$_GET['idCabecera'];
-                        
-                        $value[$valores[0]] = $valoraux;
-                        
-                    }
-                }
-                    
-                 
-                if ( $row[1] == 'number')
-                    $value= (int)$value;
-                
-                 if ( $row[1] == 'boolean'){
-                     if ($value == 'true')
-                        $value= true;
-                     else
-                         $value= false;
-                 }
-                $col[$row[0]]= $value;
-            } 
-            $cols[] = $col;
-        }
-
-        $this->database->conectar();
-        $g->set_columns($cols);
-        $g->set_options($grid);
-        
-        $configGridAdd=false;
-        $configGridDel=false;
-        $configGridEdi=false;
-        $configAction=false;
-        
-        if (isset($_GET["estadoCabecera"]))
-            $estadoCabecera=$_GET["estadoCabecera"];
-        else
-            $estadoCabecera='0';
-
-        
-        if ($estadoCabecera == '0' OR $estadoCabecera == 'ACTIVO'){
-        
-            if ($saveGrid[0] == 'save'){
-                $configGridAdd=true;
-                $configGridDel=false;
-                $configGridEdi=false;
-            }
-
-            if ($saveGrid[0] == 'saveDelete'){
-                    $configGridAdd=true;
-                    $this->database->desconectar();		
-                    $configGridDel= false;
-                    $this->database->conectar();
-                    $configGridEdi=false;
-            }
-
-            if ($saveGrid[0] == 'saveEdit'){
-                    $configGridAdd=true;
-                    $configGridDel=false;
-                    $configGridEdi=true;
-            }
-
-            if ($saveGrid[0] == 'edit'){
-            $configGridAdd=false;
-                    $configGridDel=false;
-                    $configGridEdi=true;
-                    $configAction=true;
-            }
-
-            if ($saveGrid[0] == 'editSoloFormulario'){
-            $configGridAdd=false;
-                    $configGridDel=false;
-                    $configGridEdi=true;
-            }
-        }    
-        
-        $g->set_actions(array("add"=>$configGridAdd,"edit"=>$configGridEdi,"delete"=>$configGridDel,"rowactions"=>$configAction,"search" => "advance"));
-
-        return $g->render("list1");
-        
-    }
-
     function eventSave(){
         
         $accion=$_GET['accion'];
         
+        echo "<body>";
+        echo "<script src='../Framework/notie/notie.js'></script>";
         echo "<br><br><center><img src='../Images/save.gif'><center>";
+        echo "</body>";
         
         $nabuEvent = new NabuEvent($_GET['p'], $_POST);
         
@@ -804,8 +617,10 @@ class Utilities
         $result=$nabuEvent->getEventSql($accion,$audit['audit']);
         
        
-        $pagelink=$nabuEvent->getpagelink($_GET['p']);
-
+        $pagelinkX=$this->getpagelink($_GET['p']);
+        $pagelink = $pagelink[0];
+        
+        
         if ($pagelink == '' or pagelink == 'NULL' ){
             if ( strpos($_GET['p'], '_m_pg')  !== false)
                 $pagelink=str_replace("_m_pg","_v_pg",$_GET['p']);
@@ -834,6 +649,8 @@ class Utilities
         var message = "<?php echo $mensaje;?>" ;
         var link = "<?php echo $pagelink ;?>" ;
         var tipo = <?php echo $tipomensaje;?>;
+        
+        console.log("No se q pasa");
 
         notie.alert(tipo,message,5);
         setTimeout ('document.location = "../Pages/nabu.php?p="+link;',500); 

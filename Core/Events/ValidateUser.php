@@ -38,6 +38,7 @@ THE SOFTWARE.
 
     $_SESSION['opridLogin'] = $usuario;
     $_SESSION['menuString']='X';
+    $_SESSION['validateUser']='X';
     
     $objTemplate =new TemplatePage(NULL,$usuario);
 

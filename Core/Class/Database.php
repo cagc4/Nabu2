@@ -110,16 +110,6 @@ THE SOFTWARE.
             }
         }
         
-        function getInvoiceNum($tabla,$campo){
-            $sql ="SELECT IFNULL(MAX(CAST(".$campo." AS UNSIGNED INTEGER)),0)+1 from ".$tabla;
-            return $this->executeQueryOneRow($sql);
-        }
-        
-        function gridSave($empresa,$idpage){
-            $sql ="SELECT a.nb_page_data_fld FROM nabu2.nb_pages_tbl a WHERE a.nb_enterprise_id_fld='$empresa' and a.nb_id_page_fld='$idpage'";
-            return $this->executeQueryOneRow($sql);
-        }
-        
         function menu3($empresa,$papa2){
             $sql ="SELECT a.nb_parent_fld,a.nb_id_menu_fld FROM nabu2.nb_navigation_tbl a WHERE a.nb_enterprise_id_fld='$empresa' and a.nb_sec_fld='$papa2'";
             return $this->executeQueryOneRow($sql);
@@ -144,36 +134,7 @@ THE SOFTWARE.
             return $this->executeQueryOneRow($sql);   
         }
         
-        function getGridSaveOptions($empresa,$idpage){
-            $sql ="SELECT nb_id_page_de_fld,nb_tab_cab_fld,nb_fie_cab_fld,nb_estado_cab_fld from nabu2.nb_datagridopt_tbl a where a.nb_enterprise_id_fld='$empresa' and a.nb_id_page_fld = '$idpage'";
-            return $this->executeQueryOneRow($sql);
-        }
-        
-        function getGrid3($empresa,$type,$idpage,$col){
-            $sql ="SELECT b.nb_property_fld,b.nb_type_fld,a.nb_value_fld FROM nabu2.nb_datagridcol_tbl a , nabu2.nb_config_frmwrk_tbl b WHERE  a.nb_enterprise_id_fld='$empresa' AND a.nb_config_frmwrk_id_fld = b.nb_config_frmwrk_id_fld and b.nb_config_type_fld='$type' and a.nb_id_page_fld = '$idpage' and a.nb_column_fld='$col'";            
-            return $this->execute($sql);
-        }
-        
-        function getGrid2($empresa,$idpage){
-            $sql ="Select distinct a.nb_column_fld from nabu2.nb_datagridcol_tbl a where a.nb_id_page_fld = '$idpage'";
-            return $this->execute($sql);
-        }
-        
-        function getGrid1($empresa,$type,$idpage){
-            $sql ="SELECT b.nb_property_fld,b.nb_type_fld,a.nb_value_fld from nabu2.nb_datagrid_tbl a , nabu2.nb_config_frmwrk_tbl b where  a.nb_config_frmwrk_id_fld = b.nb_config_frmwrk_id_fld and a.nb_enterprise_id_fld='$empresa' AND b.nb_config_type_fld='$type' and a.nb_id_page_fld = '$idpage' AND a.nb_config_frmwrk_id_fld <>82";
-            return $this->execute($sql);
-        }
-        
-        function getGridHeader($empresa,$idpage){
-            $sql ="SELECT a.nb_value_fld from nabu2.nb_datagrid_tbl a where a.nb_enterprise_id_fld='$empresa' and a.nb_id_page_fld = '$idpage' AND a.nb_config_frmwrk_id_fld =82";
-            return $this->executeQueryOneRow($sql);
-        }
-        
-        function tableDataGrid($empresa,$idpage){
-            $sql ="select nb_config_frmwrk_id_fld,nb_value_fld from nabu2.nb_datagrid_tbl where nb_enterprise_id_fld='$empresa' AND nb_config_frmwrk_id_fld in (44,65) and nb_id_page_fld ='" . $idpage . "'";
-            return $this->executeQueryOneRow($sql);
-        }
-        
+       
         function getPromptSelect($empresa,$idpage,$field,$value){
             $sql ="SELECT nb_id_field_2_fld,Concat(Concat('Select ',nb_id_field_4_fld), ' from ',nb_id_table_fld, ' Where ',nb_id_field_3_fld,'=','\'".$value."\'')";
             $sql.=" FROM nabu2.nb_event_tbl where nb_enterprise_id_fld ='".$empresa."' and nb_id_page_fld='".$idpage."' and nb_id_field_1_fld='".$field."'";
@@ -215,7 +176,7 @@ THE SOFTWARE.
         }
         
         function getPageLink($empresa,$idpage){
-            $sql ="select a.nb_id2_page_fld from nabu2.nb_link_tbl a where nb_enterprise_id_fld='" . $empresa. "' and a.nb_id_page_fld = '" .$idpage . "'";
+            $sql ="select a.nb_id2_page_fld,a.nb_descripcion_fld from nabu2.nb_link_tbl a where nb_enterprise_id_fld='" . $empresa. "' and a.nb_id_page_fld = '" .$idpage . "'";
             return $this->executeQueryOneRow($sql); 
         }
         
@@ -259,12 +220,6 @@ THE SOFTWARE.
         function nextSequence($empresa,$field){
             $sql ="Update nb_sequences_tbl set nb_value_fld=nb_value_fld+1 where nb_enterprise_id_fld ='".$empresa."' and nb_id_table_field_fld = '" .$field . "'";
             return $this->execute($sql);
-        }
-        
-        function getSequence($empresa,$field){
-            $sql ="select coalesce(max(nb_value_fld),0)+1 from nb_sequences_tbl where nb_enterprise_id_fld ='".$empresa."' and nb_id_table_field_fld = '" .$field . "'";
-            $this->nextSequence($empresa,$field);
-            return $this->executeQueryOneRow($sql); 
         }
         
         function getWizardQuery($empresa,$idpage){
@@ -390,9 +345,5 @@ THE SOFTWARE.
             return $this->executeQueryOneRow($sql); 
         }
         
-        function reportPdf($empresa,$idpage){
-            $sql = "select nb_report_id_fld from nabu2.nb_reports_tbl where nb_enterprise_id_fld ='".$empresa."' and nb_id_page_fld = '".$idpage."'";
-            return $this->executeQueryOneRow($sql);
-        }
     }
 ?>

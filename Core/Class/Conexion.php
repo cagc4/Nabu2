@@ -57,6 +57,8 @@ THE SOFTWARE.
             $this->db->NLS_DATE_FORMAT =  'RRRR-MM-DD HH24:MI:SS';
 			$this->db->maxblobsize = 10485760; //Tamaño de los campos blob aumentado a 10 MB
 			$this->db->Connect($this->host,$this->user, $this->password ,$this->database);
+            
+            
 			return $this->db;
 		}
 

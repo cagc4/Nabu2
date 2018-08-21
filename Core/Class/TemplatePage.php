@@ -15,7 +15,8 @@ class TemplatePage
 
 	function TemplatePage($objUtilities,$usuario){
 
-        if (!isset ($objUtilities)){
+        if (!isset ($objUtilities)){ 
+            
             $this->objUtilities = new Utilities('localhost','nabu','6492496','nabu2');
             $_SESSION['objUtilities']=$this->objUtilities;
             
@@ -28,9 +29,10 @@ class TemplatePage
                 $this->initTemplate($_SESSION['app'],'home');
             }
         }
-        else
-            $this->objUtilities=$objUtilities;
-        
+        else{
+            $this->objUtilities=$objUtilities; 
+        }
+            
     }
 
     function initTemplate($empresa,$id_page){
@@ -39,16 +41,28 @@ class TemplatePage
         $this->pageProperties=$this->objUtilities->pageProperties($empresa,$id_page);
         
         $this->pageAttribute=$this->objUtilities->pageAttribute($empresa,$id_page);
-        $this->urlCurrent = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         
+        if ($_SESSION['validateUser']=='X'){
+                                
+            $bindEmp[0]=$empresa;
+            $sqlEmpresa = $this->objUtilities->database->getSqlStatement('nabu', 'nabuconnect', $bindEmp, "1");
+        
+            $bd =$sqlEmpresa[1];
+            $usuario =$sqlEmpresa[2];
+            $password =$sqlEmpresa[3];
+            $host =$sqlEmpresa[4];
+            
+            $this->objUtilities = new Utilities($host, $usuario, $password, $bd);
+                
+            $_SESSION['objUtilities']=$this->objUtilities;
+            $_SESSION['validateUser']='';
+        }
         
         if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg')
             $this->menuPrincipal = new Menu($empresa,$this->objUtilities,$_SESSION['menuString']);
-         
         
+         
         $this->tipo=$this->pageProperties['tipo'];
-        if ($this->tipo == 'datagrid')
-        	$this->render=$this->objUtilities->getDataGrid($id_page);
         
         if ($this->tipo <> 'save')
             $this->contenido($empresa,$id_page);
@@ -259,8 +273,10 @@ class TemplatePage
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                           <div class="x_title">
-                            <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>   
-                              <h2><i class="fa fa-external-link-square"></i>&nbsp;&nbsp;<a href="?p=nb_categorias_v_pg">Visualización de Categorias</a></h2>
+                            <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ 
+                                    $linkProp=$this->objUtilities->getpagelink($_GET['p']);
+                            ?>   
+                              <h2><i class="fa fa-external-link-square"></i>&nbsp;&nbsp;<a href="?p=<?php echo $linkProp[0]; ?>"><?php echo $linkProp[1]; ?></a></h2>
                             <?php }?>  
                             <ul class="nav navbar-right panel_toolbox">
                               <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
@@ -289,66 +305,7 @@ class TemplatePage
 			            $postrender=$this->objUtilities->getPostrender($empresa,$id_page);
                         $this->objUtilities->forms($style,$trace,$schema,$options,$data, $view,$postrender);
                     }
-                    if ($this->tipo == 'datagrid'){
-                        
-                        $rPDF=$this->objUtilities->reportPdf($empresa,$id_page);
-                        
-                        if ($rPDF <> NULL and $rPDF <>'' )
-                            $permiso = true;
-                        else
-                            $permiso = false;
-                        
-                    ?>    
-                        <div style="margin:10px">
-                            <?php 
-                                
-                                $header=$this->objUtilities->gridHeader($empresa,$id_page);
-                        
-                                if ( $header <> NULL and $header <>''){
-                                ?>    
-                                    <a class="headerGrid">
-                                        <button type="button" class="fa fa-th-large btn btn-default btn-sm">&nbsp;&nbsp;Encabezado</button>
-                                    </a>    
-                                    <br><br>
-                            
-                                    <script>
-                                        $(document).on("click", ".headerGrid", function(e) {
-                                           var dialog = bootbox.dialog({
-                                                title: 'Encabezado',
-                                                message: '<p><i class="fa fa-spin fa-spinner fa-2x"></i>Cargando Datos</p>',
-                                                backdrop: true,
-                                                className:"headerGrid"
-                                            });
-
-                                            dialog.init(function(){
-                                                setTimeout(function(){dialog.find('.bootbox-body').html('<?php echo $header ?>');},1000);});
-                                        });
-                                    </script> 
-                                <?php
-                                }
-                                
-                                echo $this->render;
-                                
-                                if ($_SESSION['role'] == 1){
-                                    $csv=$this->objUtilities->fileDatagrid($id_page);
-                                     if ($csv <> '' and $permiso === false ){
-                                        echo "<br><a href='$urlCurrent'>Actualizar</a>&nbsp&nbsp&nbsp&nbsp";
-                                        echo "<a href='$csv' target='_blank'>Descargar Archivo</a>";
-                                     }
-                                }
-                        
-                                if ($permiso !== false){ 
-                                    if (isset($_GET["idCabecera"])){
-                                        $idCabecera=$_GET["idCabecera"];
-                                        if (!is_numeric($idCabecera))
-                                            $idCabecera=0;
-                                    }
-                                    echo "<br><a href='../Reports/".$rPDF.".php?idF=1&idCabecera=$idCabecera' target='_blank'>Imprimir Factura</a>";   
-                                }
-                            ?>
-                        </div>
-                    <?php
-                    }
+                   
                     if ($this->tipo == 'chart'){
                         $this->objUtilities->legend($id_page);
                     ?>

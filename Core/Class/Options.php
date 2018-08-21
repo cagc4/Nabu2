@@ -46,29 +46,23 @@ class Options{
 
    	
    function addType($value,$valbol){
-   	$this->type = $value;
-       
-    if ( $valbol == 'false')
-        $valbol=false;
-    else
-        $valbol=true;
-       
+   	 $this->type = $value;
      $this->showActionsColumn = $valbol;
-   
    }
     
-  function addDatatables($info){
-      
+  function addDatatables($info,$buttons){
       if (!isset($this->datatables)){
           $this->datatables = array();
        }      
       
-      	$this->datatables["paging"] = false;
-        $this->datatables["searching"] = false;
+      	$this->datatables["paging"] = true;
+        $this->datatables["searching"] = true;
         $this->datatables["ordering"] = false;
-        $this->datatables["lengthChange"] = false;
-        $this->datatables["info"] = false;
+        $this->datatables["lengthChange"] = true;
+        $this->datatables["info"] = true;
+      
         $this->datatables["language"] =$info;
+        $this->datatables["buttons"] =$buttons;
   }    
     
    function addForm($fieldId,$value){

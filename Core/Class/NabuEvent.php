@@ -45,13 +45,7 @@ class NabuEvent
         $this->database = $objUtilities->database;
     }
 	
-    function getpagelink($page){
-        
-        $pageLink =$this->database->getPageLink($_SESSION['app'],$page);
-    
-        return $pageLink[0];
-    }
-    
+
     function getEventSql($accion, $audit) {
         
         
@@ -108,9 +102,6 @@ class NabuEvent
                     }
                     
                     $fieldsTable .= $field[1];
-
-                    //if ($value =='')
-                    //    $value ='nabuNull';    
 
                     if ($value <> 'nabuNull' ){
 
@@ -229,7 +220,9 @@ class NabuEvent
             if ($accion == 0 or $accion == 2)
                 $sql .=$values;
             
+            
             $result =$this->database->executeSqlEvent($sql);
+            
             
             if ($result->EOF <> 1)
                 $resultado=0;
