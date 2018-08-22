@@ -50,7 +50,7 @@ class Options{
      $this->showActionsColumn = $valbol;
    }
     
-  function addDatatables($info,$buttons){
+  function addDatatables($info){
       if (!isset($this->datatables)){
           $this->datatables = array();
        }      
@@ -62,7 +62,6 @@ class Options{
         $this->datatables["info"] = true;
       
         $this->datatables["language"] =$info;
-        $this->datatables["buttons"] =$buttons;
   }    
     
    function addForm($fieldId,$value){

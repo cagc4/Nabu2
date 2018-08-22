@@ -437,16 +437,13 @@ class Utilities
             $info['emptyTable']='Sin datos para mostrar';
             $info['search']='Buscar';
             $info['lengthMenu']='Mostrar _MENU_ entradas';
+            
             $info['info']='<h5><p align=left>Mostrando del _START_ al _END_ de _TOTAL_ datos en total</p></h5>';
+            $info['infoFiltered']='<h6><p align=left>(Filtrado de _MAX_ datos en total)</p></h6>';
+
+
             
-            
-            $extend['extend']='first';
-            $className['className']='copyButton';
-            
-            $buttons['buttons']=$extend;
-            $buttons['buttons']=$className;
-            
-            $json->addDatatables($info,$buttons);
+            $json->addDatatables($info);
 			unset($json->renderForm);
 			unset($json->fields);
 		}

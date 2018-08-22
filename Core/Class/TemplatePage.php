@@ -270,9 +270,15 @@ class TemplatePage
                     <div class="clearfix"></div>
 
                     <div class="row">
-                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        
+                      <div>
+                      <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
+                        
                         <div class="x_panel">
-                          <div class="x_title">
+                        
+                            
+                          
+                        <div class="x_title">
                             <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ 
                                     $linkProp=$this->objUtilities->getpagelink($_GET['p']);
                             ?>   
@@ -283,11 +289,16 @@ class TemplatePage
                               <li><a class=""><i class="fa fa-info-circle"></i></a></li>
                               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
+                            <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>
                             <div class="clearfix"></div>
+                              Aca podemos describir algo
                           </div>
-                          <div class="x_content">
+                            <?php } ?>
                         
-                          <div align='center'>
+                        
+                          <div class="x_content">
+                          
+                            <div align='left'>
                               
 				<?php
                     
@@ -317,7 +328,8 @@ class TemplatePage
                     }
                     
                     ?>
-			             </div>
+			            
+                        </div>
                           </div>
                         </div>
                       </div>
