@@ -2,10 +2,12 @@
 
 include "../Class/Utilities.php";
 include "../Class/Menu.php";
+include "../Framework/Google/googleSign.php";
 
 class TemplatePage
 {
-	var $menuPrincipal;
+    
+    var $menuPrincipal;
 	var $objUtilities;
 	var $pageProperties;
     var $pageAttribute;
@@ -14,7 +16,7 @@ class TemplatePage
     var $urlCurrent;
 
 	function TemplatePage($objUtilities,$usuario){
-
+        
         if (!isset ($objUtilities)){ 
             
             $this->objUtilities = new Utilities('localhost','nabu','6492496','nabu2');
@@ -108,7 +110,21 @@ class TemplatePage
                       <a href="../Pages/nabu.php?p=home" class="site_title"><i>N</i><span>&nbsp;&nbsp;<img src="../Images/logo.png" ></span></a>
                     </div>
 
-                    <div class="clearfix"></div>
+                    <div class="clearfix">
+                      
+                    <!-- menu profile quick info -->
+                        <div class="profile clearfix">
+                          <div class="profile_pic">
+                            <img src="../Images/user.jpg" alt="..." class="img-circle profile_img">
+                          </div>
+                          <div class="profile_info">
+                            <span>Bienvenido,</span>
+                            <h2>Carlos García Cobo</h2>
+                          </div>
+                        </div>
+                        <!-- /menu profile quick info -->
+
+                    </div>
                       
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -336,6 +352,13 @@ class TemplatePage
                     </div>
                   </div>
                 </div>
+                <div align=center><?php 
+                            if ($id_page = 'login'){
+                                echo googleSIgn(); 
+                            }
+                                
+                        ?>
+                </div> 
                 <!-- /page content -->
 
                 <!-- footer content -->
