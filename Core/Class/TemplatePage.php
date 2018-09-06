@@ -354,6 +354,7 @@ class TemplatePage
                 </div>
                 <div align=center><?php 
                             if ($id_page = 'login'){
+                                 echo '<a href=""><img src="../Images/signingoogle.png" alt="Ingresa con tu cuenta Google" /></a>';
                                 //echo googleSIgn(); 
                             }
                                 
