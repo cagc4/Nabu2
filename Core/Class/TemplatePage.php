@@ -2,7 +2,7 @@
 
 include "../Class/Utilities.php";
 include "../Class/Menu.php";
-include "../Framework/Google/googleSign.php";
+//include "../Framework/Google/googleSign.php";
 
 class TemplatePage
 {
@@ -354,7 +354,7 @@ class TemplatePage
                 </div>
                 <div align=center><?php 
                             if ($id_page = 'login'){
-                                echo googleSIgn(); 
+                                //echo googleSIgn(); 
                             }
                                 
                         ?>
