@@ -168,7 +168,7 @@ class TemplatePage
                       <ul class="nav navbar-nav navbar-right">
                         <li class="">
                           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <span class=" fa fa-cogs fa-2x"></span>  
+                             <img src="../Images/user.jpg" alt="">Carlos Garcia Cobo
                             <span class=" fa fa-angle-down"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-usermenu pull-right">
