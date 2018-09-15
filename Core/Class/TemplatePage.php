@@ -2,7 +2,6 @@
 
 include "../Class/Utilities.php";
 include "../Class/Menu.php";
-//include "../Framework/Google/googleSign.php";
 
 class TemplatePage
 {
