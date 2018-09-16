@@ -42,7 +42,7 @@ class Login
 
     function Login(){
         
-        $this->redirect_url = 'http://localhost/Nabu2/Core/Events/ValidateUser.php'; 
+        $this->redirect_url = 'http://nabugi.com/Nabu2/Core/Events/ValidateUser.php'; 
         $this->client_id = '225702401481-tslc05tn785dg1m41lh4h9jhvsquiipk.apps.googleusercontent.com';
         $this->client_secret = 'uIVfML4S33xsukHN-v8WKclS';
         $this->api_key = '';
