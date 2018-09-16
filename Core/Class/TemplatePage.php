@@ -315,15 +315,31 @@ class TemplatePage
                               <h2><i class="fa fa-external-link-square"></i>&nbsp;&nbsp;<a href="?p=<?php echo $linkProp[0]; ?>"><?php echo $linkProp[1]; ?></a></h2>
                             <?php }?>  
                             <ul class="nav navbar-right panel_toolbox">
+                              <?php
+                                 if ($id_page <> 'login'){
+                              ?> 
                               <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                               <li><a class=""><i class="fa fa-info-circle"></i></a></li>
                               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                              <?php }?>      
                             </ul>
                             <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>
                             <div class="clearfix"></div>
                               Aca podemos describir algo
                           </div>
-                            <?php } ?>
+                            <?php } 
+                            else{
+                            
+                                if ($id_page == 'login'){
+                                    echo '
+                                    <div id="options"
+                                        data-input-name="pais"
+                                        data-selected-country="CO">
+                                    </div>
+                                    ';
+                                }
+                            }
+                            ?>
                         
                         
                           <div class="x_content">
@@ -373,10 +389,16 @@ class TemplatePage
                                 
                                 $linkGoogle=$this->login->start();
                                 
-                                echo "<a href=$linkGoogle class='loginboton'>
+                                echo "<br>
+                                    <a href=$linkGoogle class='loginboton'>
                                     <span class='fa fa-google'></span>   
                                     <span>Ingresa con Google</span>
-                                </a>";
+                                    </a>
+                                    <br><br><br>
+                                    <div class='made'>
+                                    <span>Hecho con <img src='../Images/hearth.png '> en Colombia</span>
+                                    </div>
+                                ";
                                 
                             }
                                 
@@ -398,6 +420,29 @@ class TemplatePage
             </div>    
             <!-- Attribute JS -->
             <?php echo $this->pageAttribute[1];?>
+                  
+            <script>
+    
+                $('#options').flagStrap({
+                    countries: {
+                        "CO": "Español",
+                        "GB": "Ingles"
+
+                    },
+                    buttonSize: "btn-lg",
+                    placeholder:false,
+                    buttonSize: "btn-sm",
+                    labelMargin: "20px",
+                    scrollable: false,
+                    scrollableHeight: "350px",
+
+                    onSelect: function (value, element) {
+                        //alert(value);
+                        //console.log(element);
+                    }
+
+                });
+            </script>      
               
           </body>
         </html>

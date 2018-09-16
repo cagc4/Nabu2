@@ -1,39 +1,11 @@
 
-/*body{
-	
-	background-color: #000000;
-}
-header{
-	
-	
-	height:80px;
-	color:#f6f8f8;
-	font-size:28px;
-    text-align:left;
-	position:relative;
-	z-index:-1;
-	text-align:left;
-	
-	font-family:Georgia;
-	font-style:oblique;
-	font-weight : bold;
-
-	background-color:#7898e4;
-	background-image:-webkit-linear-gradient(top, #7898e4, #2f3337);
-	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
-
-
-}
-
-header  td.slogan{	
+.made{	
 	color:#fff;	
-	font-size:13px;
-	font-weight : bold;
+	font-size:14px;
+	font-weight :bold;
+
 }
 
-header  td.banderas{
-	text-align:right;
-}*/
 
 
 .formsSimple{
@@ -110,20 +82,6 @@ header  td.banderas{
 }
 
 
-/*.footer{
-	background-color: #292c2f;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-	box-sizing: border-box;
-	width: 100%;
-	text-align: left;
-	font: normal 16px sans-serif;
-	padding: 4px 50px;
-    color:  #e3e1e3;
-    font-size: 14px;
-    position: fixed;
-    bottom: 0;
-}*/
-
 .campos{
     font: normal 16px sans-serif;
 }
@@ -146,21 +104,3 @@ header  td.banderas{
 	text-decoration:none;
 
 }
-
-
-/*.headerGrid .modal-body{
-    width:  200%;
-    height: 100px;
-}
-
-
-.modal-body {
-    height: 500px;
-    overflow-y: scroll;
-}
-
-@media screen and (max-width:500px)
-    .modal-body {
-    height: 200px;
-    overflow-y: scroll;
-}*/
