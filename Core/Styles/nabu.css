@@ -133,6 +133,21 @@ header  td.banderas{
     text-align: justify;
 }
 
+.loginboton {
+    font-size:14px;
+    font-weight: bold;
+    background: #4387FD;
+    border: 10px solid #4387FD;
+    line-height: 28px;
+    padding: 0px 12px;
+    border-radius: 20px;
+	float:center;
+	color:#FFF;
+	text-decoration:none;
+
+}
+
+
 /*.headerGrid .modal-body{
     width:  200%;
     height: 100px;

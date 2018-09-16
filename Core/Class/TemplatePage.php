@@ -31,14 +31,8 @@ class TemplatePage
                 $_SESSION['app']   = $row[0];
                 $_SESSION['oprid'] = $row[1];
                 $_SESSION['role']  = $row[2];
-                
-                $this->avatar = $row[3];
-                
-                if ($this->avatar  == '')
-                    $this->avatar='../Images/default_avatar.png';
-                
-                
-                $this->userName = $row[4];
+                $_SESSION['avatar']  = $row[3];
+                $_SESSION['userName']  = $row[4];
                 
                 $this->initTemplate($_SESSION['app'],'home');
             }
@@ -50,6 +44,14 @@ class TemplatePage
     }
 
     function initTemplate($empresa,$id_page){
+        
+        
+        $this->avatar =$_SESSION['avatar'];
+                
+        if ($this->avatar  == '')
+            $this->avatar='../Images/default_avatar.png';
+                
+        $this->userName = $_SESSION['userName'];
         
         
         $this->pageProperties=$this->objUtilities->pageProperties($empresa,$id_page);
@@ -365,13 +367,17 @@ class TemplatePage
                   </div>
                 </div>
                 <div align=center><?php 
-                            if ($id_page = 'login'){
+                            if ($id_page == 'login'){
                                 
                                 $this->login = new Login();
                                 
                                 $linkGoogle=$this->login->start();
                                 
-                                echo "<a href=$linkGoogle><img src='../Images/signingoogle.png' alt='Ingresa con tu cuenta Google' /></a>";
+                                echo "<a href=$linkGoogle class='loginboton'>
+                                    <span class='fa fa-google'></span>   
+                                    <span>Ingresa con Google</span>
+                                </a>";
+                                
                             }
                                 
                         ?>

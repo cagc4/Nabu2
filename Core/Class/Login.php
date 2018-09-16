@@ -99,7 +99,7 @@ class Login
               $person->nb_photo_fld = $info['picture'];
 		  }
 		  else{
-			$person->nb_photo_fld = 'img/default_avatar.png';
+			$person->nb_photo_fld = '../Images/default_avatar.png';
         }
 		
 		$person->save();
