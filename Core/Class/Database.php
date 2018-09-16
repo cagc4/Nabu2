@@ -248,8 +248,8 @@ THE SOFTWARE.
             return $this->executeQueryOneRow($sql);   
         }
         
-        function validateUser($usuario){
-            $sql="SELECT nb_enterprise_id_fld,nb_id_user_fld,nb_id_role_fld from nabu2.nb_user_tbl WHERE nb_user_fld='".$usuario."' and nb_estado_fld='0' ";
+        function getUserInfo($usuario){
+            $sql="SELECT nb_enterprise_id_fld,nb_id_user_fld,nb_id_role_fld,nb_photo_fld,nb_descr_fld from nabu2.nb_user_tbl WHERE nb_user_fld='".$usuario."' and nb_estado_fld='0' ";
             return $this->executeQueryOneRow($sql);
         }
         

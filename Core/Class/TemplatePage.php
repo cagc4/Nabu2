@@ -2,6 +2,8 @@
 
 include "../Class/Utilities.php";
 include "../Class/Menu.php";
+include "../Class/Login.php";
+
 
 class TemplatePage
 {
@@ -13,6 +15,9 @@ class TemplatePage
     var $render;
     var $config;
     var $urlCurrent;
+    var $login;
+    var $avatar;
+    var $userName;
 
 	function TemplatePage($objUtilities,$usuario){
         
@@ -22,10 +27,18 @@ class TemplatePage
             $_SESSION['objUtilities']=$this->objUtilities;
             
             if ($usuario <> ''){
-                $row=$this->objUtilities->database->validateUser($usuario);
+                $row=$this->objUtilities->database->getUserInfo($usuario);
                 $_SESSION['app']   = $row[0];
                 $_SESSION['oprid'] = $row[1];
                 $_SESSION['role']  = $row[2];
+                
+                $this->avatar = $row[3];
+                
+                if ($this->avatar  == '')
+                    $this->avatar='../Images/default_avatar.png';
+                
+                
+                $this->userName = $row[4];
                 
                 $this->initTemplate($_SESSION['app'],'home');
             }
@@ -33,7 +46,7 @@ class TemplatePage
         else{
             $this->objUtilities=$objUtilities; 
         }
-            
+        
     }
 
     function initTemplate($empresa,$id_page){
@@ -114,11 +127,11 @@ class TemplatePage
                     <!-- menu profile quick info -->
                         <div class="profile clearfix">
                           <div class="profile_pic">
-                            <img src="../Images/user.jpg" alt="..." class="img-circle profile_img">
+                            <img src="<?php echo $this->avatar;?>" alt="..." class="img-circle profile_img">
                           </div>
                           <div class="profile_info">
                             <span>Bienvenido,</span>
-                            <h2>Carlos García Cobo</h2>
+                            <h2><?php echo $this->userName;?></h2>
                           </div>
                         </div>
                         <!-- /menu profile quick info -->
@@ -167,7 +180,7 @@ class TemplatePage
                       <ul class="nav navbar-nav navbar-right">
                         <li class="">
                           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                             <img src="../Images/user.jpg" alt="">Carlos Garcia Cobo
+                             <img src="<?php echo $this->avatar;?>" alt=""><?php echo $this->userName;?>
                             <span class=" fa fa-angle-down"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -353,8 +366,12 @@ class TemplatePage
                 </div>
                 <div align=center><?php 
                             if ($id_page = 'login'){
-                                 echo '<a href=""><img src="../Images/signingoogle.png" alt="Ingresa con tu cuenta Google" /></a>';
-                                //echo googleSIgn(); 
+                                
+                                $this->login = new Login();
+                                
+                                $linkGoogle=$this->login->start();
+                                
+                                echo "<a href=$linkGoogle><img src='../Images/signingoogle.png' alt='Ingresa con tu cuenta Google' /></a>";
                             }
                                 
                         ?>

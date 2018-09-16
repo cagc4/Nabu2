@@ -30,15 +30,25 @@ THE SOFTWARE.
 
 */
     include "../Class/TemplatePage.php";
+   
 
     session_start();
     
-    $usuario=$_POST['nb_a_user_fld'];
-    $password=$_POST['nb_password_fld'];
+    
+    if (isset($_GET['code'])) {
+        $login = new Login();
+        $usuario=$login->getUser(); 
+        
+    }
+    else{
+        $usuario=$_POST['nb_a_user_fld'];
+    }
 
-    $_SESSION['opridLogin'] = $usuario;
+    $_SESSION['opridLogin'] = $usuario;    
     $_SESSION['menuString']='X';
     $_SESSION['validateUser']='X';
+
+    
     
     $objTemplate =new TemplatePage(NULL,$usuario);
 
