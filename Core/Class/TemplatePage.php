@@ -3,6 +3,7 @@
 include "../Class/Utilities.php";
 include "../Class/Menu.php";
 include "../Class/Login.php";
+include "../Pages/homeTemplate.php";
 
 
 class TemplatePage
@@ -104,7 +105,7 @@ class TemplatePage
             <!-- Attribute Css -->
             <?php echo $this->pageAttribute[0];?>
               
-          </head>
+            </head>
 
           <body class="nav-md">
             
@@ -285,6 +286,11 @@ class TemplatePage
                 <?php }?>  
                 <!-- page content -->
                 <div class="right_col" role="main">
+                    
+                  <?php if ($id_page == 'home')
+                       home();
+                    else{
+                  ?>        
                   <div class="">
                     <div class="page-title">
                         <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?> 
@@ -381,6 +387,7 @@ class TemplatePage
                       </div>
                     </div>
                   </div>
+                  <?php } ?>    
                 </div>
                 <div align=center><?php 
                             if ($id_page == 'login'){
@@ -419,6 +426,7 @@ class TemplatePage
               </div>
             </div>    
             <!-- Attribute JS -->
+                  
             <?php echo $this->pageAttribute[1];?>
                   
             <script>
