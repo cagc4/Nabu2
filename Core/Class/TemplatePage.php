@@ -24,7 +24,7 @@ class TemplatePage
         
         if (!isset ($objUtilities)){ 
             
-            $this->objUtilities = new Utilities('localhost','nabu','6492496','nabu2');
+            $this->objUtilities = new Utilities('nabu.ckahhdatgucn.us-east-2.rds.amazonaws.com','nabu','nabu6492496','nabu2');
             $_SESSION['objUtilities']=$this->objUtilities;
             
             if ($usuario <> ''){

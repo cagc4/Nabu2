@@ -51,7 +51,7 @@ if ( isset($_POST['token']) ){
         $binds=explode(";",$_POST['binds']);                // Parametros de entrada SQL
 
         
-        $objUtilities = new Utilities('localhost','nabu','6492496','nabu2');
+        $objUtilities = new Utilities('nabu.ckahhdatgucn.us-east-2.rds.amazonaws.com','nabu','nabu6492496','nabu2');
         $database = $objUtilities->database;
 
         $bindEmp[0]=$codigoemp;
