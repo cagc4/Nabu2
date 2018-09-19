@@ -6,9 +6,9 @@ require_once 'include/google-api-php-client/contrib/apiOauth2Service.php';
 require_once 'include/idiorm.php';
 require_once 'include/relativeTime.php';
 
-$host = 'localhost';
+$host = 'nabu.ckahhdatgucn.us-east-2.rds.amazonaws.com';
 $user = 'nabu';
-$pass = '6492496';
+$pass = 'nabu6492496';
 $database = 'nabu2';
 
 ORM::configure("mysql:host=$host;dbname=$database");

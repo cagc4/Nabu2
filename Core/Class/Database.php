@@ -88,7 +88,7 @@ THE SOFTWARE.
         function getSqlStatement($empresa,$id,$bind,$type){
             
             
-            $sqlText="Select nb_sql_fld, nb_trace_fld from nabu2.nb_sqlText_tbl where nb_enterprise_id_fld='".$empresa."' and nb_sql_id_fld='".$id."'";
+            $sqlText="Select nb_sql_fld, nb_trace_fld from nabu2.nb_sqltext_tbl where nb_enterprise_id_fld='".$empresa."' and nb_sql_id_fld='".$id."'";
             
             $sql=$this->executeQueryOneRow($sqlText);
             
