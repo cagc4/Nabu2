@@ -430,7 +430,9 @@ class TemplatePage
             </div>    
             <!-- Attribute JS -->
                   
-            <?php echo $this->pageAttribute[1];?>
+            <?php echo $this->pageAttribute[1];
+                if ($id_page == 'login'){       
+            ?>
                   
             <script>
     
@@ -453,7 +455,8 @@ class TemplatePage
                     }
 
                 });
-            </script>      
+            </script> 
+            <?php } ?>      
               
           </body>
         </html>
