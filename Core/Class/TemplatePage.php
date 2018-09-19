@@ -24,7 +24,9 @@ class TemplatePage
         
         if (!isset ($objUtilities)){ 
             
-            $this->objUtilities = new Utilities('nabu.ckahhdatgucn.us-east-2.rds.amazonaws.com','nabu','nabu6492496','nabu2');
+            $configDB =  json_decode(file_get_contents("../Config/config.json"),true);
+            $this->objUtilities = new Utilities($configDB["hostname"],$configDB["username"],$configDB["password"],$configDB["database"]);
+            
             $_SESSION['objUtilities']=$this->objUtilities;
             
             if ($usuario <> ''){
