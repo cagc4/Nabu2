@@ -83,10 +83,11 @@ class TemplatePage
          
         $this->tipo=$this->pageProperties['tipo'];
         
-        if ($this->tipo <> 'save')
-            $this->contenido($empresa,$id_page);
-        else
-            $this->objUtilities->eventSave();
+        $this->contenido($empresa,$id_page);
+        
+        if( isset($_GET['accion']) )
+            $this->objUtilities->eventSave($_GET['accion']);
+                
         
     }
 
@@ -223,7 +224,7 @@ class TemplatePage
                           <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                             <li>
                               <a>
-                                <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                <span class="fa fa-circle"></span>
                                 <span>
                                   <span>John Smith</span>
                                   <span class="time">3 mins ago</span>
@@ -235,7 +236,7 @@ class TemplatePage
                             </li>
                             <li>
                               <a>
-                                <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                <span class="fa fa-circle"></span>
                                 <span>
                                   <span>John Smith</span>
                                   <span class="time">3 mins ago</span>
@@ -247,7 +248,7 @@ class TemplatePage
                             </li>
                             <li>
                               <a>
-                                <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                <span class="fa fa-circle"></span>
                                 <span>
                                   <span>John Smith</span>
                                   <span class="time">3 mins ago</span>
@@ -259,7 +260,7 @@ class TemplatePage
                             </li>
                             <li>
                               <a>
-                                <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                <span class="fa fa-circle"></span>
                                 <span>
                                   <span>John Smith</span>
                                   <span class="time">3 mins ago</span>

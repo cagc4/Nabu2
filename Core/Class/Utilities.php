@@ -598,61 +598,70 @@ class Utilities
 <?php        
     }
 
-    function eventSave(){
+    function eventSave($accion){
         
-        $accion=$_GET['accion'];
+        $redirect=0;
         
-        echo "<body>";
-        echo "<script src='../Framework/notie/notie.js'></script>";
-        echo "<br><br><center><img src='../Images/save.gif'><center>";
-        echo "</body>";
-        
-        $nabuEvent = new NabuEvent($_GET['p'], $_POST);
-        
-        $audit=$this->database->getPageAudit($_SESSION['app'],$_GET['p']);
-        
-        $result=$nabuEvent->getEventSql($accion,$audit['audit']);
-        
-       
-        $pagelinkX=$this->getpagelink($_GET['p']);
-        $pagelink = $pagelink[0];
-        
-        
-        if ($pagelink == '' or pagelink == 'NULL' ){
-            if ( strpos($_GET['p'], '_m_pg')  !== false)
-                $pagelink=str_replace("_m_pg","_v_pg",$_GET['p']);
-            else 
-                $pagelink=str_replace("_pg","_v_pg",$_GET['p']);
-        }
-           
-            
-        if ($result== 1){
-            $tipomensaje=1;
+        if ( is_numeric($accion)){
+            echo "<script src='../Framework/notie/notie.js'></script>";
 
-            if ($accion== 0 or $accion== 2)
-                $mensaje='Guardado Exitoso';
-            else
-                if ($accion== 1 or $accion== 3){
-                    $mensaje='Actualizacion Exitosa';
+            if ($accion== 2){
+                $tipomensaje=1;
+                $mensaje='Bienvenido a Nabu';
+            }
+            else{
+                
+                $nabuEvent = new NabuEvent($_GET['p'], $_POST);
+
+                $audit=$this->database->getPageAudit($_SESSION['app'],$_GET['p']);
+
+                $result=$nabuEvent->getEventSql($accion,$audit['audit']);
+
+
+                $pagelinkX=$this->getpagelink($_GET['p']);
+                $pagelink = $pagelink[0];
+
+                if ($pagelink == '' or pagelink == 'NULL' ){
+                    if ( strpos($_GET['p'], '_m_pg')  !== false)
+                        $pagelink=str_replace("_m_pg","_v_pg",$_GET['p']);
+                    else 
+                        $pagelink=str_replace("_pg","_v_pg",$_GET['p']);
                 }
-        }
-        else{
-            $tipomensaje=3;
-            $mensaje='Problemas al realizar la Operacion';
-        }
+
+
+                if ($result== 1){
+                    $tipomensaje=1;
+                    $redirect=1;
+
+                    if ($accion== 0)
+                        $mensaje='Guardado Exitoso';
+                    else
+                        if ($accion== 1){
+                            $mensaje='Actualizacion Exitosa';
+                        }
+                }
+                else{
+                    $tipomensaje=3;
+                    $mensaje='Problemas al realizar la Operacion';
+                }
+            }    
 ?>
 
     <script languaje="javascript">
         var message = "<?php echo $mensaje;?>" ;
         var link = "<?php echo $pagelink ;?>" ;
         var tipo = <?php echo $tipomensaje;?>;
+        var redirect= <?php echo $redirect;?>;
         
-        console.log("No se q pasa");
-
         notie.alert(tipo,message,5);
-        setTimeout ('document.location = "../Pages/nabu.php?p="+link;',500); 
+        
+        console.log('CAGC='+redirect);
+        
+        if (redirect == 1)
+            setTimeout ('document.location = "../Pages/nabu.php?p="+link;',800); 
     </script>
 <?php
+        }
     }
 }
 ?>
