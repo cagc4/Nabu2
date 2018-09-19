@@ -1,7 +1,9 @@
 <?php
 
 /*
-http://localhost/Nabu/Core/Events/webservice.php?token=e53db2b5b93254fddb55de43a3323970&codigoemp=paraiso&codigovalidacion=none&validacion=getData&binds=nb_compras_pg;nb_codigo_provedor_fld;1The MIT License (MIT)
+http://localhost/Nabu2/Core/Events/webservice.php?token=e53db2b5b93254fddb55de43a3323970&codigoemp=nabufina&codigovalidacion=none&validacion=getData&binds=nb_compras_pg;nb_codigo_provedor_fld;1
+
+The MIT License (MIT)
 
 Copyright (c) <2016> <Carlos Alberto Garcia Cobo - carlosgc4@gmail.com>
 
@@ -34,13 +36,14 @@ include_once "../Class/Utilities.php";
 include_once "../Class/JsonData.php";
 
 
-if ( isset($_POST['token']) ){
+
+if ( isset($_POST['token']) ){ 
     $token =$_POST['token'];
     
     if ($token == 'e53db2b5b93254fddb55de43a3323970'){
 
         header('Content-type: application/json');
-                
+
         
         //Parametros del AJAX
         
@@ -52,7 +55,9 @@ if ( isset($_POST['token']) ){
 
         
         $configDB =  json_decode(file_get_contents("../Config/config.json"),true);
-        $this->objUtilities = new Utilities($configDB["hostname"],$configDB["username"],$configDB["password"],$configDB["database"]);
+        
+        $objUtilities = new Utilities($configDB["hostname"],$configDB["username"],$configDB["password"],$configDB["database"]);
+        
         $database = $objUtilities->database;
 
         $bindEmp[0]=$codigoemp;
