@@ -7,7 +7,7 @@ require_once 'include/idiorm.php';
 require_once 'include/relativeTime.php';
 
 
-$this->objUtilities = new Utilities($configDB["hostname"],$configDB["username"],$configDB["password"],$configDB["database"]);
+$configDB =  json_decode(file_get_contents("../Config/config.json"),true);
 
 $host = $configDB["hostname"];
 $user = $configDB["username"];
