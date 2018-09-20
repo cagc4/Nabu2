@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 	Fecha creacion		= 28-02-2015
 	Desarrollador		= CAGC  
-	Fecha modificacion	= 09-04-2018
+	Fecha modificacion	= 20-10-2018
 	Usuario Modifico	= CAGC
 
 */
@@ -267,9 +267,9 @@ class Utilities
                                                 $value[0]=$_GET[$field[0]];
 
                                             $crypted=$this->database->ifCrypted($empresa,$field[1],$field[0]);
-
+                                            
                                             if ($crypted[0] =='Y')
-                                                $value[0]=base64_decode($value[0])/444;
+                                                $value[0]=$this->database->decrypt($value[0]);
                                             
                                             if ($i == 1)
                                                 $where=$where.$field[0]."='".$value[0]."' ";
@@ -285,10 +285,17 @@ class Utilities
                                 }
                                 else{
                                     
+                                    
+                                        
                                         $veriField=$this->database->verificarCampo($empresa,$id,$field[0]);
                                     
                                         $value=$this->database->getDatavalueW($field[1],$field[0],$where);
                                         $type =$this->database->getTypes($empresa,$field[1],$field[0]);
+                                    
+                                        $crypted=$this->database->ifCrypted($empresa,$field[1],$field[0]);
+                                            
+                                            if ($crypted[0] =='Y')
+                                                $value[0]=$this->database->decrypt($value[0]);
                                     
                                         if ($veriField[0] <> 'Y')
                                             $fieldsData[$field[0]]=$value[0];
@@ -335,7 +342,7 @@ class Utilities
         else
         {  
             if($ifcampos)
-                $jsonA=$json->getDataSelect($this->database ,$table[0],$fields);
+                $jsonA=$json->getDataSelectU($this->database ,$table[0],$fields);
             else
                 $jsonA='';
         }
@@ -600,68 +607,56 @@ class Utilities
 
     function eventSave($accion){
         
-        $redirect=0;
-        
-        if ( is_numeric($accion)){
-            echo "<script src='../Framework/notie/notie.js'></script>";
+        echo "<body>";
+        echo "<script src='../Framework/notie/notie.js'></script>";
+        echo "<br><br><center><img src='../Images/save.gif'><center>";
+        echo "</body>";
 
-            if ($accion== 2){
-                $tipomensaje=1;
-                $mensaje='Bienvenido a Nabu';
-            }
-            else{
-                
-                $nabuEvent = new NabuEvent($_GET['p'], $_POST);
+       
+        $nabuEvent = new NabuEvent($_GET['p'], $_POST);
 
-                $audit=$this->database->getPageAudit($_SESSION['app'],$_GET['p']);
+        $audit=$this->database->getPageAudit($_SESSION['app'],$_GET['p']);
+        $result=$nabuEvent->getEventSql($accion,$audit['audit']);
 
-                $result=$nabuEvent->getEventSql($accion,$audit['audit']);
+        $pagelinkX=$this->getpagelink($_GET['p']);
+        $pagelink = $pagelink[0];
+
+        if ($pagelink == '' or pagelink == 'NULL' ){
+            if ( strpos($_GET['p'], '_m_pg')  !== false)
+                $pagelink=str_replace("_m_pg","_v_pg",$_GET['p']);
+            else 
+                $pagelink=str_replace("_pg","_v_pg",$_GET['p']);
+        }
 
 
-                $pagelinkX=$this->getpagelink($_GET['p']);
-                $pagelink = $pagelink[0];
+        if ($result== 1){
+            $tipomensaje=1;
+            $redirect=1;
 
-                if ($pagelink == '' or pagelink == 'NULL' ){
-                    if ( strpos($_GET['p'], '_m_pg')  !== false)
-                        $pagelink=str_replace("_m_pg","_v_pg",$_GET['p']);
-                    else 
-                        $pagelink=str_replace("_pg","_v_pg",$_GET['p']);
+            if ($accion== 0)
+                $mensaje='Guardado Exitoso';
+            else
+                if ($accion== 1){
+                    $mensaje='Actualizacion Exitosa';
                 }
-
-
-                if ($result== 1){
-                    $tipomensaje=1;
-                    $redirect=1;
-
-                    if ($accion== 0)
-                        $mensaje='Guardado Exitoso';
-                    else
-                        if ($accion== 1){
-                            $mensaje='Actualizacion Exitosa';
-                        }
-                }
-                else{
-                    $tipomensaje=3;
-                    $mensaje='Problemas al realizar la Operacion';
-                }
-            }    
+        }
+        else{
+            $tipomensaje=3;
+            $mensaje='Problemas al realizar la Operacion';
+        }
+            
 ?>
 
     <script languaje="javascript">
         var message = "<?php echo $mensaje;?>" ;
         var link = "<?php echo $pagelink ;?>" ;
         var tipo = <?php echo $tipomensaje;?>;
-        var redirect= <?php echo $redirect;?>;
         
         notie.alert(tipo,message,5);
-        
-        console.log('CAGC='+redirect);
-        
-        if (redirect == 1)
-            setTimeout ('document.location = "../Pages/nabu.php?p="+link;',800); 
+        setTimeout ('document.location = "../Pages/nabu.php?p="+link;',800); 
     </script>
 <?php
-        }
+
     }
 }
 ?>

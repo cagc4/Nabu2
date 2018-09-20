@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 	Fecha creacion		= 24-09-2015
 	Desarrollador		= CAGC
-    Fecha modificacion	= 09-03-2017
+    Fecha modificacion	= 20-10-2018
 	Usuario Modifico	= CAGC
 
 */
@@ -86,9 +86,14 @@ class NabuEvent
                         if (isset($_POST[$field[0]])){
                             $value =trim($_POST[$field[0]]);
                             
+                                     
                             $password=strpos($field[1],'password'); 
                             if ($password)
-                                $value =md5(trim($_POST[$field[0]]));    
+                                $value =md5(trim($_POST[$field[0]]));
+                            
+                            $crypted=$this->database->ifCrypted($_SESSION['app'],$table[0],$field[0]);
+                            if ($crypted[0] =='Y')
+                                $value =$crypted=$this->database->encrypt(trim($_POST[$field[0]]));  
                         }
                         else
                             $value ='nabuNull';

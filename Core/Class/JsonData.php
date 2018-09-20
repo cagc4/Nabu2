@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 	Fecha creacion		= 28-02-2015
 	Desarrollador		= CAGC
-	Fecha modificacion	= 18-02-2016
+	Fecha modificacion	= 20-10-2018
 	Usuario Modifico	= CAGC
 
 */
@@ -72,7 +72,7 @@ class JsonData
         
     }
 
-    function getDataSelect($database, $table,$fields){
+    function getDataSelectU($database, $table,$fields){
         
        
         if (!isset($data))
@@ -85,7 +85,15 @@ class JsonData
         foreach($values as $value){
             $j=1;
             foreach($fields as $field){
-                $data[$i][str_replace('nb_','nb_'.$j.'_',$field[0])] =$value[$field[0]];
+                
+                $crypted=$database->ifCrypted($_SESSION['app'],$table,$field[0]);
+                
+                $valueF=$value[$field[0]];
+                
+                if ($crypted[0] =='Y')
+                    $valueF =$crypted=$database->decrypt(trim($valueF));  
+                
+                $data[$i][str_replace('nb_','nb_'.$j.'_',$field[0])] =$valueF;
                 $j=$j+1;
             }
             $i=$i+1;

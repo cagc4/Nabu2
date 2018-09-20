@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 	Fecha creacion		= 17-03-2017
 	Desarrollador		= CAGC
-	Fecha modificacion	= 22-09-2017
+	Fecha modificacion	= 20-10-2018
 	Usuario Modifico	= CAGC
 
 */
@@ -40,7 +40,9 @@ include_once "../Class/JsonData.php";
 if ( isset($_POST['token']) ){ 
     $token =$_POST['token'];
     
-    if ($token == 'e53db2b5b93254fddb55de43a3323970'){
+    $config =  json_decode(file_get_contents("../Config/config.json"),true);
+    
+    if ($token == md5($config["token"])){
 
         header('Content-type: application/json');
 

@@ -1,5 +1,35 @@
 <?php
 
+/*
+The MIT License (MIT)
+
+Copyright (c) <2016> <Carlos Alberto Garcia Cobo - carlosgc4@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+	Fecha creacion		= 24-09-2015
+	Desarrollador		= CAGC
+    Fecha modificacion	= 20-10-2018
+	Usuario Modifico	= CAGC
+
+*/
+
 include "../Class/Utilities.php";
 include "../Class/Menu.php";
 include "../Class/Login.php";
@@ -14,18 +44,18 @@ class TemplatePage
 	var $pageProperties;
     var $pageAttribute;
     var $render;
-    var $config;
     var $urlCurrent;
     var $login;
     var $avatar;
     var $userName;
+    
 
 	function TemplatePage($objUtilities,$usuario){
         
         if (!isset ($objUtilities)){ 
             
-            $configDB =  json_decode(file_get_contents("../Config/config.json"),true);
-            $this->objUtilities = new Utilities($configDB["hostname"],$configDB["username"],$configDB["password"],$configDB["database"]);
+            $config =  json_decode(file_get_contents("../Config/config.json"),true);
+            $this->objUtilities = new Utilities($config["hostname"],$config["username"],$config["password"],$config["database"]);
             
             $_SESSION['objUtilities']=$this->objUtilities;
             
@@ -36,6 +66,7 @@ class TemplatePage
                 $_SESSION['role']  = $row[2];
                 $_SESSION['avatar']  = $row[3];
                 $_SESSION['userName']  = $row[4];
+                $_SESSION['encryptKey']  = md5($config["encryptKey"]);
                 
                 $this->initTemplate($_SESSION['app'],'home');
             }
@@ -83,11 +114,16 @@ class TemplatePage
          
         $this->tipo=$this->pageProperties['tipo'];
         
-        $this->contenido($empresa,$id_page);
+        $accion=-1;
         
-        if( isset($_GET['accion']) )
-            $this->objUtilities->eventSave($_GET['accion']);
-                
+        if(isset($_GET['accion']))
+            if (is_numeric($_GET['accion']))
+                $accion=$_GET['accion'];
+        
+        if( $accion==0 or $accion ==1 )
+            $this->objUtilities->eventSave($accion);
+        else
+            $this->contenido($empresa,$id_page);        
         
     }
 

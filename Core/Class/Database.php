@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 	Fecha creacion		= 20-02-2015
 	Desarrollador		= CAGC
-	Fecha modificacion	= 10-04-2018
+	Fecha modificacion	= 20-10-2018
 	Usuario Modifico	= CAGC
 
 */
@@ -343,6 +343,18 @@ THE SOFTWARE.
         function valueRef($empresa,$campo){
             $sql ="select nb_id_table_fld,nb_empresa_fld,nb_usuario_fld,nb_estado_fld,nb_role_fld from nabu2.nb_value_ref_tbl where nb_enterprise_id_fld ='".$empresa."' and nb_id_pr_schema_fld ='".$campo."'";
             return $this->executeQueryOneRow($sql); 
+        }
+        
+        function encrypt($value){
+            $sql ="SELECT HEX(AES_ENCRYPT('".$value."', '".$_SESSION['encryptKey']."'));";
+            $crypted=$this->executeQueryOneRow($sql);
+            return $crypted[0];
+        }
+        
+        function decrypt($value){
+            $sql ="SELECT AES_DECRYPT(UNHEX('".$value."'), '".$_SESSION['encryptKey']."');";
+            $descrypted=$this->executeQueryOneRow($sql);
+            return $descrypted[0];
         }
         
     }
