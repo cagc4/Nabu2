@@ -52,6 +52,10 @@ class TemplatePage
 
 	function TemplatePage($objUtilities,$usuario){
         
+        if(!isset($_SESSION['app']) )
+            $_SESSION['app']   = 'nabu';
+        
+        
         if (!isset ($objUtilities)){ 
             
             $config =  json_decode(file_get_contents("../Config/config.json"),true);
@@ -115,16 +119,6 @@ class TemplatePage
          
         $this->tipo=$this->pageProperties['tipo'];
         
-        //$accion=-1;
-        
-        //if(isset($_GET['accion']))
-        //    if (is_numeric($_GET['accion']))
-        //        $accion=$_GET['accion'];
-        
-        //if( $accion==0 or $accion ==1 )
-        //    $this->objUtilities->eventSave($accion);
-        //else
-        
         $this->contenido($empresa,$id_page);        
         
     }
@@ -159,7 +153,22 @@ class TemplatePage
             <?php }?>
             
                   
-                <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>    
+                <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>
+                 
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(document).idleTimeout({
+                          redirectUrl:  '../Pages/nabu.php?p=login',
+                          idleTimeLimit: 900,
+                          enableDialog: true,
+                          dialogDisplayLimit: 30,
+                          dialogTitle: 'Nabu',
+                          dialogText: 'Se cierra la sesion por inactividad de 15 minutos',    
+                          sessionKeepAliveTimer: false
+                        });
+                    });    
+                </script>
+                 
                 <div class="col-md-3 left_col">
                   <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
