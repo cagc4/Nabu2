@@ -91,7 +91,8 @@ class JsonData
                 $valueF=$value[$field[0]];
                 
                 if ($crypted[0] =='Y')
-                    $valueF =$crypted=$database->decrypt(trim($valueF));  
+                    $valueF =$database->decrypt(trim($valueF));
+                
                 
                 $data[$i][str_replace('nb_','nb_'.$j.'_',$field[0])] =$valueF;
                 $j=$j+1;

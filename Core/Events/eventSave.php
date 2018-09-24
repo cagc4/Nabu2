@@ -19,20 +19,21 @@ if ( isset($_POST['token']) ){
         $accion=$_POST['accion'];
         $page=$_POST['page'];
         $app=$_POST['app'];
+        $encryptKey=md5($configDB["encryptKey"]);
 
-        $result=eventSave($app,$database,$page,$data,$accion,$objUtilities);
+        $result=eventSave($app,$database,$page,$data,$accion,$objUtilities,$encryptKey);
     }
 }
 
 echo json_encode($result);
     
     
-function eventSave($app,$database,$page,$data,$accion,$objUtilities){
+function eventSave($app,$database,$page,$data,$accion,$objUtilities,$encryptKey){
         
     $nabuEvent = new NabuEvent($app,$page,$objUtilities);
 
     $audit=$database->getPageAudit($app,$page);
-    $result=$nabuEvent->getEventSql($data,$accion,$audit['audit']);
+    $result=$nabuEvent->getEventSql($data,$accion,$audit['audit'],$encryptKey);
 
     $pagelinkX=$objUtilities->getpagelink($page);
     $pagelink = $pagelink[0];
@@ -64,6 +65,7 @@ function eventSave($app,$database,$page,$data,$accion,$objUtilities){
     $response["tipo"] =$tipomensaje;
     $response["mensaje"] =$mensaje;
     $response["duracion"] =2;
+    $response["link"] =$pagelink;
 
     return $response;
 }

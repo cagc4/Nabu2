@@ -73,7 +73,7 @@ var getDataSelect = function (empresa,ref,field,valueD,form){
     
 };
 
-var saveUpdateForm= function(app,page,fields,formu,accion){
+var saveUpdateForm= function(app,page,formu,accion){
     
     $.ajax({
             url: '../Events/eventSave.php',
@@ -88,6 +88,8 @@ var saveUpdateForm= function(app,page,fields,formu,accion){
             method: 'POST',
             success: function(jsonData){
                 notie.alert(jsonData['tipo'],jsonData['mensaje'],jsonData['duracion']);
+                var link =jsonData['link'];
+                window.setTimeout (function(){document.location = "../Pages/nabu.php?p="+link;},500);
             }
         });
 }

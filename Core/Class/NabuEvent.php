@@ -48,7 +48,7 @@ class NabuEvent
     }
 	
 
-    function getEventSql($data,$accion, $audit) {
+    function getEventSql($data,$accion, $audit,$encryptKey) {
         
         $tables = $this->database->getTables($this->app,$this->page);
         $resultado=1;
@@ -79,7 +79,7 @@ class NabuEvent
                             
                         $crypted=$this->database->ifCrypted($this->app,$table[0],$field[0]);
                             if ($crypted[0] =='Y')
-                                $value =$crypted=$this->database->encrypt(trim($data[$field[0]]));  
+                                $value =$crypted=$this->database->encrypt(trim($data[$field[0]]),$encryptKey);  
                     }
                     else
                         $value ='nabuNull';

@@ -345,8 +345,8 @@ THE SOFTWARE.
             return $this->executeQueryOneRow($sql); 
         }
         
-        function encrypt($value){
-            $sql ="SELECT HEX(AES_ENCRYPT('".$value."', '".$_SESSION['encryptKey']."'));";
+        function encrypt($value,$encryptKey){
+            $sql ="SELECT HEX(AES_ENCRYPT('".$value."', '".$encryptKey."'));";
             $crypted=$this->executeQueryOneRow($sql);
             return $crypted[0];
         }
