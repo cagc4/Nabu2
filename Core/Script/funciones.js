@@ -94,4 +94,24 @@ var saveUpdateForm= function(app,page,formu,accion){
         });
 }
 
+var validationWizards= function(codigoemp,callback,value,sqlValidacion,funcionWS,messa){
+    
+    $.ajax({
+		url: '../Events/webservice.php',
+		data: {
+				'token': 'e53db2b5b93254fddb55de43a3323970',
+				'sqlValidacion':sqlValidacion,
+           	    'funcionWS': funcionWS,
+				'codigoemp' : codigoemp,
+				'messa' : messa,
+				'binds' :value
+		},
+		dataType: 'json',
+		method: 'POST',
+        		success: function(result){
+			callback(result);
+		}
+	});
+}
+
 
