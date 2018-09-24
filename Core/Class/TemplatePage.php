@@ -79,13 +79,14 @@ class TemplatePage
 
     function initTemplate($empresa,$id_page){
         
-        
-        $this->avatar =$_SESSION['avatar'];
+        if(isset($_SESSION['avatar']) )
+            $this->avatar =$_SESSION['avatar'];
                 
         if ($this->avatar  == '')
             $this->avatar='../Images/default_avatar.png';
-                
-        $this->userName = $_SESSION['userName'];
+        
+        if(isset($_SESSION['userName']) )
+            $this->userName = $_SESSION['userName'];
         
         
         $this->pageProperties=$this->objUtilities->pageProperties($empresa,$id_page);
@@ -114,16 +115,17 @@ class TemplatePage
          
         $this->tipo=$this->pageProperties['tipo'];
         
-        $accion=-1;
+        //$accion=-1;
         
-        if(isset($_GET['accion']))
-            if (is_numeric($_GET['accion']))
-                $accion=$_GET['accion'];
+        //if(isset($_GET['accion']))
+        //    if (is_numeric($_GET['accion']))
+        //        $accion=$_GET['accion'];
         
-        if( $accion==0 or $accion ==1 )
-            $this->objUtilities->eventSave($accion);
-        else
-            $this->contenido($empresa,$id_page);        
+        //if( $accion==0 or $accion ==1 )
+        //    $this->objUtilities->eventSave($accion);
+        //else
+        
+        $this->contenido($empresa,$id_page);        
         
     }
 

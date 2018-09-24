@@ -73,9 +73,23 @@ var getDataSelect = function (empresa,ref,field,valueD,form){
     
 };
 
-
-
-
-
+var saveUpdateForm= function(app,page,fields,formu,accion){
+    
+    $.ajax({
+            url: '../Events/eventSave.php',
+            data: {
+                'token': 'e53db2b5b93254fddb55de43a3323970',
+                'app' :app,
+                'formulario' :formu,
+                'page' :page,
+                'accion':accion
+            },
+            dataType: 'json',
+            method: 'POST',
+            success: function(jsonData){
+                notie.alert(jsonData['tipo'],jsonData['mensaje'],jsonData['duracion']);
+            }
+        });
+}
 
 

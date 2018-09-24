@@ -35,10 +35,9 @@ include_once "Options.php";
 include_once "JsonData.php";
 include_once "Chart.php";
 include_once "View.php";
-include_once "../Framework/Datagrid/lib/inc/jqgrid_dist.php";
 include_once "Database.php";
 include_once "ExportToExcel.php";
-include_once "../Class/NabuEvent.php";
+//include_once "../Class/NabuEvent.php";
 
 class Utilities
 {
@@ -492,9 +491,9 @@ class Utilities
         $JsonSchema =$this->fixedJson(json_encode($schema));
         $JsonOptions=$this->fixedJson(json_encode($options));
         $JsonData=$this->fixedJson(json_encode($data));
-        $JsonView=json_encode($view, JSON_PRETTY_PRINT);    
+        $JsonView=$this->fixedJson(json_encode($view, JSON_PRETTY_PRINT)); 
         
-		if  ($imprimirJsons == "true") {
+        if  ($imprimirJsons == "true") {
 			echo '*******************************************************Schema*******************************************************<br/>';
 			print_r($JsonSchema);
 			echo '<br/>*******************************************************Options*******************************************************<br/>';
@@ -605,7 +604,7 @@ class Utilities
 <?php        
     }
 
-    function eventSave($accion){
+    /*function eventSave($accion){
         
         echo "<body>";
         echo "<script src='../Framework/notie/notie.js'></script>";
@@ -657,6 +656,6 @@ class Utilities
     </script>
 <?php
 
-    }
+    }*/
 }
 ?>
