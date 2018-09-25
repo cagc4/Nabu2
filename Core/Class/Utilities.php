@@ -511,6 +511,7 @@ class Utilities
 			<div id="field1"></div>
 				<script type="text/javascript" id="field1-script">
 					$(function() {
+                        Alpaca.defaultFocus=false;
 						Alpaca.setDefaultLocale("es_ES");
 						$("#field1").alpaca({
 							"optionsSource":<?php print_r($JsonOptions);?>,
