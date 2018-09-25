@@ -159,11 +159,11 @@ class TemplatePage
                     $(document).ready(function () {
                         $(document).idleTimeout({
                           redirectUrl:  '../Pages/nabu.php?p=login',
-                          idleTimeLimit: 900,
+                          idleTimeLimit: 600,
                           enableDialog: true,
                           dialogDisplayLimit: 30,
                           dialogTitle: 'Nabu',
-                          dialogText: 'Se cierra la sesion por inactividad de 15 minutos',    
+                          dialogText: 'Se cierra la sesion por inactividad de 10 minutos',    
                           sessionKeepAliveTimer: false
                         });
                     });    
