@@ -171,8 +171,8 @@ class TemplatePage
                  
                 <div class="col-md-3 left_col">
                   <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                      <a href="../Pages/nabu.php?p=home" class="site_title"><i>N</i><span>&nbsp;&nbsp;<img src="../Images/logo.png" ></span></a>
+                     <div class="navbar nav_title" style="border: 0;">
+                         <a href="../Pages/nabu.php?p=home" class="site_title"><i>Q</i><span>&nbsp;&nbsp;<img src="../Images/logo.png" ></span></a>
                     </div>
 
                     <div class="clearfix">
@@ -347,7 +347,7 @@ class TemplatePage
                         <div class="title_left">
                         <h3></h3>
                         <?php }else{?>
-                          <div align='center'><img src="../Images/logo.png"> 
+                          <div align='center'><img src="../Images/logo.png">
                         <?php }?>  
                       </div>
                       </div>
