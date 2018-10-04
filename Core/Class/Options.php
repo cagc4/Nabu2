@@ -62,6 +62,9 @@ class Options{
         $this->datatables["info"] = true;
       
         $this->datatables["language"] =$info;
+      
+        $this->datatables['dom'] = 'Bfrtip';
+        $this->datatables['buttons'] = ['copy', 'csv', 'excel', 'pdf', 'print'];
   }    
     
    function addForm($fieldId,$value){
