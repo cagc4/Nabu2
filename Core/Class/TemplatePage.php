@@ -34,6 +34,7 @@ include "../Class/Utilities.php";
 include "../Class/Menu.php";
 include "../Class/Login.php";
 include "../Pages/homeTemplate.php";
+include "../Pages/datatableTemplate.php";
 
 
 class TemplatePage
@@ -419,6 +420,10 @@ class TemplatePage
                         $this->objUtilities->forms($style,$trace,$schema,$options,$data, $view,$postrender);
                     }
                    
+                    if ($this->tipo == 'datagrid'){
+                        datagrid();
+                    }
+                        
                     if ($this->tipo == 'chart'){
                         $this->objUtilities->legend($id_page);
                     ?>

@@ -60,6 +60,7 @@ class Options{
         $this->datatables["ordering"] = false;
         $this->datatables["lengthChange"] = true;
         $this->datatables["info"] = true;
+        $this->datatables["responsive"] = true;
       
         $this->datatables["language"] =$info;
       

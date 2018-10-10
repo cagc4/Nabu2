@@ -440,7 +440,15 @@ class Utilities
             $paginate['previous']='Atrás';
             $paginate['next']='Siguiente';
             
+            
             $info['paginate']=$paginate;
+            
+            $buttons['copyTitle']='Datos Copiados';
+            $buttons['copySuccess']= "{_: '%d líneas copiadas', 1: '1 línea copiada'}";
+            
+            $info['buttons']=$buttons;
+            
+            
             $info['emptyTable']='Sin datos para mostrar';
             $info['search']='Buscar';
             $info['lengthMenu']='Mostrar _MENU_ entradas';
