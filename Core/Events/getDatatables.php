@@ -65,13 +65,22 @@ if ($token == md5($config["token"])){
     
         $fields  = $database->getFieldsPage($empresa,$pagina,'vw');
     
+        $primaryKey = 1;
+    
+    
         $i=0;
         foreach($fields as $field){
         
-            if ($i == 0)
-                $primaryKey = $field[0];
+           $crypted=$database->ifCrypted($empresa,$table,$field[0]);
+                
+            if ($crypted[0] =='Y')
+                $columna ="AES_DECRYPT(UNHEX(".$field[0]."),'".$encryptKey."')";
+            else
+                $columna =$field[0];
+
             
-            $columns[$i]['db']=$field[0];
+            
+            $columns[$i]['db']=$columna;
             $columns[$i]['dt']=$i;
             
             /*
@@ -100,7 +109,7 @@ if ($token == md5($config["token"])){
             'host' => $config["hostname"]
         );
  
-
+        
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          * If you just want to use the basic configuration for DataTables with PHP
          * server-side, there is no need to edit below this line.
@@ -111,6 +120,7 @@ if ($token == md5($config["token"])){
         header('Content-type: application/json');
 
         echo json_encode(
-            SSP::simple( $_GET,$sql_details, $table, $primaryKey, $columns,$database,$empresa,$encryptKey)
+            SSP::simple( $_GET,$sql_details, $table, $primaryKey, $columns)
         );
+    
 }

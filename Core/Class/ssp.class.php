@@ -31,7 +31,7 @@ class SSP {
 	 *  @param  array $data    Data from the SQL get
 	 *  @return array          Formatted data in a row based format
 	 */
-	static function data_output ( $columns, $data , $database , $empresa,$table,$encryptKey)
+	static function data_output ( $columns, $data)
 	{
 		$out = array();
 
@@ -42,19 +42,12 @@ class SSP {
             for ( $j=0, $jen=count($columns) ; $j<$jen ; $j++ ) {
 				$column = $columns[$j];
                 
-                $valueF = $data[$i][ $columns[$j]['db'] ];
-                
-                $crypted=$database->ifCrypted($empresa,$table,$column['db']);
-                
-                if ($crypted[0] =='Y')
-                    $valueF =$database->decrypt(trim($valueF),$encryptKey);
-
-				// Is there a formatter?
+                // Is there a formatter?
 				if ( isset( $column['formatter'] ) ) {
 					$row[ $column['dt'] ] = $column['formatter']( $data[$i][ $column['db'] ], $data[$i] );
 				}
 				else {
-					$row[ $column['dt'] ] = $valueF; 
+					$row[ $column['dt'] ] = $data[$i][ $columns[$j]['db'] ];
 				}
                 
             }
@@ -168,11 +161,13 @@ class SSP {
 	 *    sql_exec() function
 	 *  @return string SQL where clause
 	 */
-	static function filter ( $request, $columns, &$bindings )
+	static function filter ( $request, $columns, &$bindings)
 	{
-		$globalSearch = array();
+		
+        $globalSearch = array();
 		$columnSearch = array();
 		$dtColumns = self::pluck( $columns, 'dt' );
+        
 
 		if ( isset($request['search']) && $request['search']['value'] != '' ) {
 			$str = $request['search']['value'];
@@ -181,10 +176,12 @@ class SSP {
 				$requestColumn = $request['columns'][$i];
 				$columnIdx = array_search( $requestColumn['data'], $dtColumns );
 				$column = $columns[ $columnIdx ];
-
-				if ( $requestColumn['searchable'] == 'true' ) {
-					$binding = self::bind( $bindings, '%'.$str.'%', PDO::PARAM_STR );
-					$globalSearch[] = "`".$column['db']."` LIKE ".$binding;
+                
+                if ( $requestColumn['searchable'] == 'true' ) {
+                    $binding = self::bind( $bindings, '%'.$str.'%', PDO::PARAM_STR );
+                    //CAGC INICIO 001
+					//$globalSearch[] = "`".$column['db']."` LIKE ".$binding;
+                    $globalSearch[] = "".$column['db']." LIKE ".$binding;
 				}
 			}
 		}
@@ -201,7 +198,9 @@ class SSP {
 				if ( $requestColumn['searchable'] == 'true' &&
 				 $str != '' ) {
 					$binding = self::bind( $bindings, '%'.$str.'%', PDO::PARAM_STR );
-					$columnSearch[] = "`".$column['db']."` LIKE ".$binding;
+                    //CAGC INICIO 001
+					//$columnSearch[] = "`".$column['db']."` LIKE ".$binding;
+                    $columnSearch[] = "".$column['db']." LIKE ".$binding;
 				}
 			}
 		}
@@ -241,7 +240,7 @@ class SSP {
 	 *  @param  array $columns Column information array
 	 *  @return array          Server-side processing response array
 	 */
-	static function simple ( $request, $conn, $table, $primaryKey, $columns ,$database,$empresa,$encryptKey)
+	static function simple ( $request, $conn, $table, $primaryKey, $columns)
 	{
 		$bindings = array();
 		$db = self::db( $conn );
@@ -249,11 +248,13 @@ class SSP {
 		// Build the SQL query string from the request
 		$limit = self::limit( $request, $columns );
 		$order = self::order( $request, $columns );
-		$where = self::filter( $request, $columns, $bindings );
+		$where = self::filter( $request, $columns, $bindings);
 
 		// Main query to actually get the data
 		$data = self::sql_exec( $db, $bindings,
-			"SELECT `".implode("`, `", self::pluck($columns, 'db'))."`
+            //CAGC INICIO 001   
+			//"SELECT `".implode("`, `", self::pluck($columns, 'db'))."`
+             "SELECT ".implode(", ", self::pluck($columns, 'db'))."
 			 FROM `$table`
 			 $where
 			 $order
@@ -262,15 +263,19 @@ class SSP {
 
 		// Data set length after filtering
 		$resFilterLength = self::sql_exec( $db, $bindings,
-			"SELECT COUNT(`{$primaryKey}`)
-			 FROM   `$table`
+            //CAGC INICIO 001                              
+			//"SELECT COUNT(`{$primaryKey}`)
+            "SELECT COUNT({$primaryKey})
+			FROM   `$table`
 			 $where"
 		);
 		$recordsFiltered = $resFilterLength[0][0];
 
 		// Total data set length
 		$resTotalLength = self::sql_exec( $db,
-			"SELECT COUNT(`{$primaryKey}`)
+            //CAGC INICIO 001                              
+			//"SELECT COUNT(`{$primaryKey}`)
+            "SELECT COUNT({$primaryKey})
 			 FROM   `$table`"
 		);
 		$recordsTotal = $resTotalLength[0][0];
@@ -284,7 +289,7 @@ class SSP {
 				0,
 			"recordsTotal"    => intval( $recordsTotal ),
 			"recordsFiltered" => intval( $recordsFiltered ),
-			"data"            => self::data_output( $columns, $data ,$database, $empresa,$table,$encryptKey)
+			"data"            => self::data_output( $columns, $data)
 		);
 	}
 
@@ -488,8 +493,8 @@ class SSP {
 	static function bind ( &$a, $val, $type )
 	{
 		$key = ':binding_'.count( $a );
-
-		$a[] = array(
+        
+        $a[] = array(
 			'key' => $key,
 			'val' => $val,
 			'type' => $type
@@ -516,6 +521,8 @@ class SSP {
 		}
 
 		return $out;
+        
+        
 	}
 
 
