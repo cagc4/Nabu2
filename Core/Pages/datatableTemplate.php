@@ -25,8 +25,6 @@ function datagrid(){
      
      $(document).ready(function() {
          
-            
-            // DataTable
             var table =$('#example').DataTable( {
                 "paging": true,
                 "searching": true,
@@ -77,12 +75,21 @@ function datagrid(){
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,
-                "ajax": "../Events/getDatatables.php",
+                "ajax": {
+                            "url": "../Events/getdatatables.php",
+                            "contentType": "application/json",
+                            "type": "GET", //  CAGC Tiene que ser get para que funcione la busqueda
+                            "data": {
+                                        "token": 'e53db2b5b93254fddb55de43a3323970',
+                                        "codigoemp":'nabufina',
+                                        "pagina":'nb_categorias_v_pg'
+                            },
+                },
                 dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-            } );
+                buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ]
+                } );
          
              // Apply the search
             table.columns().every(function (index) {

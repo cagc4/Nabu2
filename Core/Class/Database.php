@@ -351,8 +351,8 @@ THE SOFTWARE.
             return $crypted[0];
         }
         
-        function decrypt($value){
-            $sql ="SELECT AES_DECRYPT(UNHEX('".$value."'), '".$_SESSION['encryptKey']."');";
+        function decrypt($value,$encryptKey){
+            $sql ="SELECT AES_DECRYPT(UNHEX('".$value."'), '".$encryptKey."');";
             $descrypted=$this->executeQueryOneRow($sql);
             return $descrypted[0];
         }

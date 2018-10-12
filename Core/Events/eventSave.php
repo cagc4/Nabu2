@@ -11,15 +11,15 @@ if ( isset($_POST['token']) ){
     
     if ($token == md5($config["token"])){
         header('Content-type: application/json');
-        $configDB =  json_decode(file_get_contents("../Config/config.json"),true);
-        $objUtilities = new Utilities($configDB["hostname"],$configDB["username"],$configDB["password"],$configDB["database"]);
+        
+        $objUtilities = new Utilities($config["hostname"],$config["username"],$config["password"],$config["database"]);
         $database = $objUtilities->database;
     
         $data=(array)json_decode($_POST['formulario']);
         $accion=$_POST['accion'];
         $page=$_POST['page'];
         $app=$_POST['app'];
-        $encryptKey=md5($configDB["encryptKey"]);
+        $encryptKey=md5($config["encryptKey"]);
 
         $result=eventSave($app,$database,$page,$data,$accion,$objUtilities,$encryptKey);
     }

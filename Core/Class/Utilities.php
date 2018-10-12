@@ -338,13 +338,13 @@ class Utilities
                 $jsonA=$json->getData($fields);
             }
         }
-        else
+        /*else
         {  
             if($ifcampos)
                 $jsonA=$json->getDataSelectU($this->database ,$table[0],$fields);
             else
                 $jsonA='';
-        }
+        }*/
 
         
        return $jsonA;

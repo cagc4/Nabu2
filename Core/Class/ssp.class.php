@@ -31,24 +31,33 @@ class SSP {
 	 *  @param  array $data    Data from the SQL get
 	 *  @return array          Formatted data in a row based format
 	 */
-	static function data_output ( $columns, $data )
+	static function data_output ( $columns, $data , $database , $empresa,$table,$encryptKey)
 	{
 		$out = array();
 
 		for ( $i=0, $ien=count($data) ; $i<$ien ; $i++ ) {
 			$row = array();
 
-			for ( $j=0, $jen=count($columns) ; $j<$jen ; $j++ ) {
+            
+            for ( $j=0, $jen=count($columns) ; $j<$jen ; $j++ ) {
 				$column = $columns[$j];
+                
+                $valueF = $data[$i][ $columns[$j]['db'] ];
+                
+                $crypted=$database->ifCrypted($empresa,$table,$column['db']);
+                
+                if ($crypted[0] =='Y')
+                    $valueF =$database->decrypt(trim($valueF),$encryptKey);
 
 				// Is there a formatter?
 				if ( isset( $column['formatter'] ) ) {
 					$row[ $column['dt'] ] = $column['formatter']( $data[$i][ $column['db'] ], $data[$i] );
 				}
 				else {
-					$row[ $column['dt'] ] = $data[$i][ $columns[$j]['db'] ];
+					$row[ $column['dt'] ] = $valueF; 
 				}
-			}
+                
+            }
 
 			$out[] = $row;
 		}
@@ -232,7 +241,7 @@ class SSP {
 	 *  @param  array $columns Column information array
 	 *  @return array          Server-side processing response array
 	 */
-	static function simple ( $request, $conn, $table, $primaryKey, $columns )
+	static function simple ( $request, $conn, $table, $primaryKey, $columns ,$database,$empresa,$encryptKey)
 	{
 		$bindings = array();
 		$db = self::db( $conn );
@@ -275,7 +284,7 @@ class SSP {
 				0,
 			"recordsTotal"    => intval( $recordsTotal ),
 			"recordsFiltered" => intval( $recordsFiltered ),
-			"data"            => self::data_output( $columns, $data )
+			"data"            => self::data_output( $columns, $data ,$database, $empresa,$table,$encryptKey)
 		);
 	}
 

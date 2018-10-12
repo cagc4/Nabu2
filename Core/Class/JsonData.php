@@ -72,7 +72,7 @@ class JsonData
         
     }
 
-    function getDataSelectU($database, $table,$fields){
+    /*function getDataSelectU($database, $table,$fields){
         
        
         if (!isset($data))
@@ -102,7 +102,7 @@ class JsonData
         
         return $data;
     
-    }
+    }*/
 }
 
 ?>

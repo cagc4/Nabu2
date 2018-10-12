@@ -56,9 +56,7 @@ if ( isset($_POST['token']) ){
         $binds=explode(";",$_POST['binds']);                // Parametros de entrada SQL
 
         
-        $configDB =  json_decode(file_get_contents("../Config/config.json"),true);
-        
-        $objUtilities = new Utilities($configDB["hostname"],$configDB["username"],$configDB["password"],$configDB["database"]);
+        $objUtilities = new Utilities($config["hostname"],$config["username"],$config["password"],$config["database"]);
         
         $database = $objUtilities->database;
 
