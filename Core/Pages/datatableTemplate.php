@@ -1,31 +1,44 @@
 <?php
 
-function datagrid(){
+function datagrid($token,$empresa,$pagina,$link,$colTit){
+    
     
 ?>
-<table id="example" class="table table-striped table-bordered table-hover dt-responsive nowrap" width="100%" >
+<table id="nabuTable" class="table table-striped table-bordered table-hover dt-responsive nowrap" width="100%" >
     <thead>                                    
         <tr>
-            <th>Link</th>
-            <th>Categoria</th>
-            <th>Descripcion</th>
-            <th>Estado</th>
-            </tr>
+            <?php
+                for ($i=0; $i<sizeof($colTit); $i++)
+                    echo "<th>".$colTit[$i]."</th>";
+            ?>
+        </tr>
         <tr>
-            <th><input type="text" data-column="1"  class="form-control"></th>
-            <th><input type="text" data-column="2"  class="form-control"></th>
-            <th class="hidden-xs"><input type="text" data-column="3"  class="form-control"></th>
-            <th class="hidden-xs"><input type="text" data-column="4"  class="form-control"></th>
+            
+            <?php
+                for ($i=0; $i<sizeof($colTit); $i++){
+                    if ($i < 2){
+                        echo '<th><input type="text" data-column="'.$i.'"  class="form-control"></th>';
+                        $visibilidad[$i]['className'] = 'all';
+                    }
+                    else{
+                        echo '<th class="hidden-xs"><input type="text" data-column="'.$i.'"  class="form-control"></th>';
+                        $visibilidad[$i]['className'] = 'desktop';
+                    }
+                }
+                
+                $jsonVisi=json_encode($visibilidad);
+    
+            ?>
         </tr> 
     </thead>
 
 </table>
-                                
+
  <script>
      
      $(document).ready(function() {
          
-            var table =$('#example').DataTable( {
+            var table =$('#nabuTable').DataTable( {
                 "paging": true,
                 "searching": true,
                 "ordering": false,
@@ -52,22 +65,16 @@ function datagrid(){
                     "infoFiltered": " (Filtrado de _MAX_ datos en total)  "
                 },
                 "orderCellsTop": true,
-                "columns": [
-
-                        { className:'all'},
-                        { className:'all'},
-                        { className:'desktop'},
-                        { className:'desktop'}
-                       ],
+                "columns": <?php echo $jsonVisi; ?>,
                 
-                        columnDefs: [
+                        "columnDefs": [
                         {
                             targets: 0,
                             render: function (data, type, row, meta)
                             {
                                 if (type === 'display')
                                 {
-                                    data = '<a href="?p=nb_categorias_m_pg&accion=b&nb_id_fld=' + encodeURIComponent(data) + '">'+encodeURIComponent(data)+'</a>';
+                                    data = '<a href="<?php echo $link ?>' + encodeURIComponent(data) + '">'+encodeURIComponent(data)+'</a>';
                                 }
                                 return data;
                             }
@@ -80,9 +87,9 @@ function datagrid(){
                             "contentType": "application/json",
                             "type": "GET", //  CAGC Tiene que ser get para que funcione la busqueda
                             "data": {
-                                        "token": 'e53db2b5b93254fddb55de43a3323970',
-                                        "codigoemp":'nabufina',
-                                        "pagina":'nb_categorias_v_pg'
+                                        "token":'<?php echo $token?>',
+                                        "codigoemp":'<?php echo $empresa?>',
+                                        "pagina":'<?php echo $pagina?>'
                             },
                 },
                 dom: 'Bfrtip',
@@ -93,7 +100,7 @@ function datagrid(){
          
              // Apply the search
             table.columns().every(function (index) {
-                $('#example thead tr:eq(1) th:eq(' + index + ') input').on('keyup change', function () {
+                $('#nabuTable thead tr:eq(1) th:eq(' + index + ') input').on('keyup change', function () {
                     table.column($(this).parent().index() + ':visible')
                     .search(this.value)
                     .draw();

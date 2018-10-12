@@ -63,6 +63,20 @@ class Utilities
 		}
 	}
     
+    
+    function datagridColumTit($empresa,$page){
+        
+        
+        $colTit = array();
+        $tittles =$this->database->datagridColumTit($empresa,$page);
+        
+        for ($i=0; $i<count($tittles); $i++)
+            $colTit[$i]=$tittles[$i][0];
+         
+        return $colTit;
+        
+    }
+    
     function castingDate($date){
     
        $fechaInicioF = split (' ', $date);

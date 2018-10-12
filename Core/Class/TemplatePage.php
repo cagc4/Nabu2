@@ -71,6 +71,7 @@ class TemplatePage
                 $_SESSION['role']  = $row[2];
                 $_SESSION['avatar']  = $row[3];
                 $_SESSION['userName']  = $row[4];
+                $_SESSION['token']  = md5($config["token"]);
                 $_SESSION['encryptKey']  = md5($config["encryptKey"]);
                 
                 $this->initTemplate($_SESSION['app'],'home');
@@ -421,7 +422,12 @@ class TemplatePage
                     }
                    
                     if ($this->tipo == 'datagrid'){
-                        datagrid();
+                        
+                        $nameKeyField=$this->objUtilities->database->getNameKeyField($empresa,$id_page);
+                        $link = "?p=".str_replace('_v_','_m_',$id_page)."&accion=b&".$nameKeyField[0]."=";
+                        
+                        $colTit=$this->objUtilities->datagridColumTit($empresa,$id_page);
+                        datagrid($_SESSION['token'],$empresa,$id_page,$link,$colTit);
                     }
                         
                     if ($this->tipo == 'chart'){

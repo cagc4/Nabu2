@@ -212,6 +212,12 @@ THE SOFTWARE.
             return $this->executeQuery($sql);  
         }
         
+        function getNameKeyField($empresa,$idpage){
+            $sql="select  b.nb_id_fld from	nb_form_tables_tbl a ,nb_table_fields_tbl b where a.nb_enterprise_id_fld=b.nb_enterprise_id_fld and		a.nb_id_table_fld = b.nb_id_table_fld and a.nb_id_page_field_fld = b.nb_id_fld and a.nb_enterprise_id_fld = '".$empresa."' and	a.nb_id_page_fld = '".$idpage."' and b.nb_key_fld = 'Y'";
+            return $this->executeQueryOneRow($sql);
+        }
+        
+        
         function getData($empresa,$idpage){
             $sql ="select nb_id_pr_schema_fld,a.nb_value_fld from nabu2.nb_data_tbl a where nb_enterprise_id_fld ='".$empresa."' and a.nb_id_page_fld = '" .$idpage . "'";
             return $this->executeQuery($sql);
@@ -355,6 +361,14 @@ THE SOFTWARE.
             $sql ="SELECT AES_DECRYPT(UNHEX('".$value."'), '".$encryptKey."');";
             $descrypted=$this->executeQueryOneRow($sql);
             return $descrypted[0];
+        }
+        
+        function datagridColumTit($empresa,$idpage){
+            
+            $sql = "select nb_schem_value_fld from nb_forms_tbl where nb_enterprise_id_fld = '".$empresa."' and nb_id_page_fld = '".$idpage."' and nb_config_frmwrk_id_fld = 12 order by nb_id_pr_schema_fld";
+            
+            return $this->executeQuery($sql);   
+            
         }
         
     }
