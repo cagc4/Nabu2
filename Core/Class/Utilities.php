@@ -294,7 +294,7 @@ class Utilities
                                         $crypted=$this->database->ifCrypted($empresa,$field[1],$field[0]);
                                             
                                             if ($crypted[0] =='Y')
-                                                $value[0]=$this->database->decrypt($value[0]);
+                                                $value[0]=$this->database->decrypt($value[0],$_SESSION['encryptKey'] );
                                     
                                         if ($veriField[0] <> 'Y')
                                             $fieldsData[$field[0]]=$value[0];
