@@ -76,7 +76,7 @@ function datagrid(){
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                            "url": "../Events/getdatatables.php",
+                            "url": "../Events/getDatatables.php",
                             "contentType": "application/json",
                             "type": "GET", //  CAGC Tiene que ser get para que funcione la busqueda
                             "data": {
