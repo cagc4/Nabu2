@@ -147,7 +147,7 @@ class TemplatePage
            <?php if ($id_page <> 'login'){?>    
            <body class="nav-md">
            <?php } else { ?>       
-           <body class="bodyLogin">
+           <body class="nav-md"> <!--bodyLogin-->
            <?php } ?>         
                
              <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>  
