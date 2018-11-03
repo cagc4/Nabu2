@@ -7,32 +7,32 @@ function home(){
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
+              <span class="count_top"><i class="fa fa-user"></i>Ingresos</span>
               <div class="count">2500</div>
               <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
+              <span class="count_top"><i class="fa fa-clock-o"></i>Gastos Fijos</span>
               <div class="count">123.50</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
+              <span class="count_top"><i class="fa fa-user"></i>Disponible</span>
               <div class="count green">2,500</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Females</span>
+              <span class="count_top"><i class="fa fa-user"></i>Metas de Ahorro</span>
               <div class="count">4,567</div>
               <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Collections</span>
+              <span class="count_top"><i class="fa fa-user"></i>Meta gasto variable</span>
               <div class="count">2,315</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
+              <span class="count_top"><i class="fa fa-user"></i>Flujo de caja</span>
               <div class="count">7,325</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
@@ -45,13 +45,13 @@ function home(){
 
                 <div class="row x_title">
                   <div class="col-md-6">
-                    <h3>Network Activities <small>Graph title sub-title</small></h3>
+                    <h3>Mis Finanzas<small>mes a mes</small></h3>
                   </div>
                   <div class="col-md-6">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                    <!--<div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                       <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                       <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                    </div>
+                    </div>-->
                   </div>
                 </div>
 
@@ -60,13 +60,13 @@ function home(){
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
                   <div class="x_title">
-                    <h2>Top Campaign Performance</h2>
+                    <h2>Resultados</h2>
                     <div class="clearfix"></div>
                   </div>
 
                   <div class="col-md-12 col-sm-12 col-xs-6">
                     <div>
-                      <p>Facebook Campaign</p>
+                      <p>Ingresos</p>
                       <div class="">
                         <div class="progress progress_sm" style="width: 76%;">
                           <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
@@ -74,7 +74,7 @@ function home(){
                       </div>
                     </div>
                     <div>
-                      <p>Twitter Campaign</p>
+                      <p>Gastos</p>
                       <div class="">
                         <div class="progress progress_sm" style="width: 76%;">
                           <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
@@ -82,7 +82,7 @@ function home(){
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12 col-sm-12 col-xs-6">
+                  <!--<div class="col-md-12 col-sm-12 col-xs-6">
                     <div>
                       <p>Conventional Media</p>
                       <div class="">
@@ -99,7 +99,7 @@ function home(){
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div>-->
 
                 </div>
 
@@ -116,7 +116,7 @@ function home(){
             <div class="col-md-4 col-sm-4 col-xs-12">
               <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                  <h2>App Versions</h2>
+                  <h2>Variacion del gasto fijo</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -225,7 +225,7 @@ function home(){
             <div class="col-md-4 col-sm-4 col-xs-12">
               <div class="x_panel tile fixed_height_320 overflow_hidden">
                 <div class="x_title">
-                  <h2>Device Usage</h2>
+                  <h2>Tipos de gastos</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -306,7 +306,7 @@ function home(){
             <div class="col-md-4 col-sm-4 col-xs-12">
               <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                  <h2>Quick Settings</h2>
+                  <h2>Perfil Financiero</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
