@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 include "../Class/Utilities.php";
 include "../Class/Menu.php";
-include "../Class/Login.php";
+//include "../Class/Login.php";
 include "../Pages/homeTemplate.php";
 include "../Pages/datatableTemplate.php";
 
@@ -46,7 +46,7 @@ class TemplatePage
     var $pageAttribute;
     var $render;
     var $urlCurrent;
-    var $login;
+    //var $login;
     var $avatar;
     var $userName;
     
@@ -298,9 +298,9 @@ class TemplatePage
                 <div align=center><?php 
                             if ($id_page == 'login'){
                                 
-                                $this->login = new Login();
+                                //$this->login = new Login();
                                 
-                                $linkGoogle=$this->login->start();
+                                //$linkGoogle=$this->login->start();
                                 
                                 echo "<br>
                                     <!--<a href=$linkGoogle class='loginboton'>

@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 */
 
-require "../Framework/Google/config.php";
+//require "../Framework/Google/config.php";
 
 class Login
 {
