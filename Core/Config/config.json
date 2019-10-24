@@ -1,7 +1,7 @@
 {
-    "hostname":"nabu.ckahhdatgucn.us-east-2.rds.amazonaws.com",
+    "hostname":"localhost",
     "username":"nabu",
-    "password":"nabu6492496",
+    "password":"6492496",
     "database":"nabu2",
     "token":"4kvar4",
     "encryptKey":"M4akrvtairn4a"

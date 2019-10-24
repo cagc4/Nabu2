@@ -1,13 +1,5 @@
 .bodyLogin {
         height: 100%;
-		background-image: url("../Images/overlay.png"), -moz-linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)), url("../Images/bg.jpg");
-		background-image: url("../Images/overlay.png"), -webkit-linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)), url("../Images/bg.jpg");
-		background-image: url("../Images/overlay.png"), -ms-linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)), url("../Images/bg.jpg");
-		background-image: url("../Images/overlay.png"), linear-gradient(60deg, rgba(255, 165, 150, 0.5) 5%, rgba(0, 228, 255, 0.35)), url("../Images/bg.jpg");
-		background-repeat: repeat,			no-repeat,			no-repeat;
-		background-size: 100px 100px, cover,				cover;
-		background-position: top left,		center center,		bottom center;
-		background-attachment: fixed,			fixed,				fixed;   
 	}
 
 
@@ -34,8 +26,15 @@
 	font-weight : bold;
 }
 
-@media screen and (max-width:500px) {
- 
+.homeImage{
+    width:100%;
+}
+
+@media screen and (max-width:760px) {
+
+    .homeImage{
+        width:24%;
+    }
     .formsSimple{
         background-color:transparent;
         width:60%;
@@ -97,6 +96,8 @@
 .campos{
     font: normal 16px sans-serif;
 }
+
+
 
 .terminos{
     font: normal 13px sans-serif;

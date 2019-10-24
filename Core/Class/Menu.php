@@ -66,9 +66,9 @@ class Menu
                 $enlace = '#';
             
             if((strpos($enlace, 'nb_') === false and ($enlace !='login' and $enlace != 'home' and $enlace !='event'))or  $enlace == '#')
-                $menuString =$menuString."<li><a href=".$enlace." ".$target."><i class='".$row['image']."'></i>&nbsp;".$row['descr']."</a>"; 
+                $menuString =$menuString."<li><a href=".$enlace." ".$target."><i class='".$row['image']."'></i>".$row['descr']."</a>"; 
             else
-                $menuString =$menuString."<li><a href=../Pages/nabu.php?p=".$enlace." ".$target."><i class='".$row['image']."'></i>&nbsp;".$row['descr']."</a>";
+                $menuString =$menuString."<li><a href=../Pages/nabu.php?p=".$enlace." ".$target."><i class='".$row['image']."'></i>".$row['descr']."</a>";
             
             if ($hijos)
 				$menuString =$menuString."<ul class='nav child_menu'>";

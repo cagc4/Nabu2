@@ -43,8 +43,8 @@ THE SOFTWARE.
     else{
         $usuario=$_POST['nb_a_user_fld'];
         
-        if ( strpos($usuario, '@') == false)
-            $usuario = $usuario."@gmail.com";
+        //if ( strpos($usuario, '@') == false)
+        //    $usuario = $usuario."@gmail.com";
     }
 
     $_SESSION['opridLogin'] = $usuario;    

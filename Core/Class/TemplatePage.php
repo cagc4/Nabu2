@@ -85,18 +85,11 @@ class TemplatePage
 
     function initTemplate($empresa,$id_page){
         
-        if(isset($_SESSION['avatar']) )
-            $this->avatar =$_SESSION['avatar'];
-                
-        if ($this->avatar  == '')
-            $this->avatar='../Images/default_avatar.png';
-        
         if(isset($_SESSION['userName']) )
             $this->userName = $_SESSION['userName'];
         
         
         $this->pageProperties=$this->objUtilities->pageProperties($empresa,$id_page);
-        
         $this->pageAttribute=$this->objUtilities->pageAttribute($empresa,$id_page);
         
         if ($_SESSION['validateUser']=='X'){
@@ -124,7 +117,7 @@ class TemplatePage
         $this->contenido($empresa,$id_page);        
         
     }
-
+    
     function contenido($empresa,$id_page){
   
 ?>        
@@ -147,15 +140,16 @@ class TemplatePage
            <?php if ($id_page <> 'login'){?>    
            <body class="nav-md">
            <?php } else { ?>       
-           <body class="nav-md"> <!--bodyLogin-->
+           <body class="nav-md">
            <?php } ?>         
                
              <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>  
              <div class="container body">
               <div class="main_container">     
-            <?php }else{?>  
+            <?php }else{?> 
             <div class="login_wrapper">
              <div class="animate form login_form">
+                 <div align='center' class="made"><H1>NABU</H1></div> 
             <?php }?>
             
                   
@@ -175,190 +169,43 @@ class TemplatePage
                     });    
                 </script>
                  
+                 
                 <div class="col-md-3 left_col">
-                  <div class="left_col scroll-view">
-                     <div class="navbar nav_title" style="border: 0;">
-                         <a href="../Pages/nabu.php?p=home" class="site_title"><i>Q</i><span>&nbsp;&nbsp;<img src="../Images/logo.png" ></span></a>
-                    </div>
-
-                    <div class="clearfix">
-                      
-                    <!-- menu profile quick info -->
-                        <div class="profile clearfix">
-                          <div class="profile_pic">
-                            <img src="<?php echo $this->avatar;?>" alt="..." class="img-circle profile_img">
-                          </div>
-                          <div class="profile_info">
-                            <span>Bienvenido,</span>
-                            <h2><?php echo $this->userName;?></h2>
-                          </div>
-                        </div>
-                        <!-- /menu profile quick info -->
-
-                    </div>
-                      
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                      <div class="menu_section">
-                        <ul class="nav side-menu">
-                            
-                          <?php echo $_SESSION['menuString'];?>
-                          
-                        </ul>
-                      </div>
-                    </div>
-                    <!-- /sidebar menu -->
-
-                    <!-- /menu footer buttons -->
-                    <div class="sidebar-footer hidden-small">
-                      <a data-toggle="tooltip" data-placement="top" title="Web">
-                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                      </a>
-                      <a data-toggle="tooltip" data-placement="top" title="Términos y Condiciones">
-                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                      </a>
-                      <a data-toggle="tooltip" data-placement="top" title="Contáctenos">
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                      </a>
-                      <a data-toggle="tooltip" data-placement="top" title="Cerrar Sesión" href="login.html">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                      </a>
-                    </div>
-                    <!-- /menu footer buttons -->
-                  </div>
+                <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                <a href="" class="site_title"><i class="fa fa-paw"></i> <span>Nabu</span></a>
                 </div>
-
-                <!-- top navigation -->
+                <div class="clearfix"></div>
+                <br />
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                <div class="menu_section">
+                <h3>Menu</h3>
+                <ul class="nav side-menu">
+                    
+                    <?php echo $_SESSION['menuString'];?>
+                        
+                </ul>
+                </div></div></div></div>
                 <div class="top_nav">
-                  <div class="nav_menu">
-                    <nav>
-                      <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                      </div>
-
-                      <ul class="nav navbar-nav navbar-right">
-                        <li class="">
-                          <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                             <img src="<?php echo $this->avatar;?>" alt=""><?php echo $this->userName;?>
-                            <span class=" fa fa-angle-down"></span>
-                          </a>
-                          <ul class="dropdown-menu dropdown-usermenu pull-right">
-                            <li><a href="javascript:;">
-                                <span class=" fa fa-user"></span>   
-                                <span>Usuario</span>
-                                </a>
-                            </li>
-                            <li>
-                              <a href="javascript:;">
-                                <span class="fa fa-cog"></span>   
-                                <span>Configuración</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:;">
-                                <span class="fa fa-life-ring"></span>   
-                                <span>Ayuda</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:;">
-                                <span class="fa fa-sign-out"></span>   
-                                <span>Cerrar Sesión</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </li>
-
-                        <li role="presentation" class="dropdown">
-                          <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-bell"></i>
-                            <span class="badge bg-green">6</span>
-                          </a>
-                          <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                            <li>
-                              <a>
-                                <span class="fa fa-circle"></span>
-                                <span>
-                                  <span>John Smith</span>
-                                  <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                  Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                              </a>
-                            </li>
-                            <li>
-                              <a>
-                                <span class="fa fa-circle"></span>
-                                <span>
-                                  <span>John Smith</span>
-                                  <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                  Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                              </a>
-                            </li>
-                            <li>
-                              <a>
-                                <span class="fa fa-circle"></span>
-                                <span>
-                                  <span>John Smith</span>
-                                  <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                  Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                              </a>
-                            </li>
-                            <li>
-                              <a>
-                                <span class="fa fa-circle"></span>
-                                <span>
-                                  <span>John Smith</span>
-                                  <span class="time">3 mins ago</span>
-                                </span>
-                                <span class="message">
-                                  Film festivals used to be do-or-die moments for movie makers. They were where...
-                                </span>
-                              </a>
-                            </li>
-                            <li>
-                              <div class="text-center">
-                                <a>
-                                  <strong>See All Alerts</strong>
-                                  <i class="fa fa-angle-right"></i>
-                                </a>
-                              </div>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
-                <!-- /top navigation -->
-
+                <div class="nav_menu">
+                <nav>
+                <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div></nav></div> </div>        
+                 
+                 
                 <?php }?>  
                 <!-- page content -->
                 <div class="right_col" role="main">
                     
-                  <?php if ($id_page == 'home')
+                  <?php 
+                        //Comento Dashboard
+                        if ($id_page == 'homeXYZ') 
                        home();
                     else{
                   ?>        
                   <div class="">
-                    <div class="page-title">
-                        <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?> 
-                        <div class="title_left">
-                        <h3></h3>
-                        <?php }else{?>
-                          <div align='center'><img src="../Images/logo.png">
-                        <?php }?>  
-                      </div>
-                      </div>
-                    </div>
-
+                    
                     <div class="clearfix"></div>
 
                     <div class="row">
@@ -366,16 +213,19 @@ class TemplatePage
                       <div>
                       <!--<div class="col-md-12 col-sm-12 col-xs-12">-->
                         
+                          
                         <div class="x_panel">
                         
                             
-                          
+                            
+                            
                         <div class="x_title">
                             <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ 
                                     $linkProp=$this->objUtilities->getpagelink($_GET['p']);
                             ?>   
                               <h2><i class="fa fa-external-link-square"></i>&nbsp;&nbsp;<a href="?p=<?php echo $linkProp[0]; ?>"><?php echo $linkProp[1]; ?></a></h2>
-                            <?php }?>  
+                            <?php }
+                            ?>  
                             <ul class="nav navbar-right panel_toolbox">
                               <?php
                                  if ($id_page <> 'login'){
@@ -387,26 +237,17 @@ class TemplatePage
                             </ul>
                             <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>
                             <div class="clearfix"></div>
-                              Aca podemos describir algo
+                              
                           </div>
-                            <?php } 
-                            else{
+                            <?php }
                             
-                                if ($id_page == 'login'){
-                                    echo '
-                                    <div id="options"
-                                        data-input-name="pais"
-                                        data-selected-country="CO">
-                                    </div>
-                                    ';
-                                }
-                            }
                             ?>
                         
                         
                           <div class="x_content">
                           
-                            <div align='left'>
+                            <div align='center'> 
+
                               
 				<?php
                     
@@ -462,11 +303,11 @@ class TemplatePage
                                 $linkGoogle=$this->login->start();
                                 
                                 echo "<br>
-                                    <a href=$linkGoogle class='loginboton'>
+                                    <!--<a href=$linkGoogle class='loginboton'>
                                     <span class='fa fa-google'></span>   
                                     <span>Ingresa con Google</span>
                                     </a>
-                                    <br><br><br>
+                                    <br><br>--><br>
                                     <div class='made'>
                                     <span>Hecho con <img src='../Images/hearth.png '> en Colombia</span>
                                     </div>
@@ -482,7 +323,7 @@ class TemplatePage
                 <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>  
                 <footer>
                   <div class="pull-right">
-                    Nabu 2018
+                    Nabu 2019
                   </div>
                   <div class="clearfix"></div>
                 </footer>
@@ -491,35 +332,11 @@ class TemplatePage
               </div>
             </div>    
             <!-- Attribute JS -->
+            <?php echo $this->pageAttribute[1]; ?>   
                   
-            <?php echo $this->pageAttribute[1];
-                if ($id_page == 'login'){       
-            ?>
+
                   
-            <script>
-    
-                $('#options').flagStrap({
-                    countries: {
-                        "CO": "Español",
-                        "GB": "Ingles"
-
-                    },
-                    buttonSize: "btn-lg",
-                    placeholder:false,
-                    buttonSize: "btn-sm",
-                    labelMargin: "20px",
-                    scrollable: false,
-                    scrollableHeight: "350px",
-
-                    onSelect: function (value, element) {
-                        //alert(value);
-                        //console.log(element);
-                    }
-
-                });
-            </script> 
-            <?php } ?>      
-              
+           
           </body>
         </html>
 
