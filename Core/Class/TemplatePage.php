@@ -200,7 +200,7 @@ class TemplatePage
                     
                   <?php 
                         //Comento Dashboard
-                        if ($id_page == 'maps') 
+                        if ($id_page == 'nb_maps_pg') 
                        home();
                     else{
                   ?>        
