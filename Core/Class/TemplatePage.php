@@ -200,7 +200,7 @@ class TemplatePage
                     
                   <?php 
                         //Comento Dashboard
-                        if ($id_page == 'homeXYZ') 
+                        if ($id_page == 'maps') 
                        home();
                     else{
                   ?>        
