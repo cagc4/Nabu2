@@ -198,12 +198,6 @@ class TemplatePage
                 <!-- page content -->
                 <div class="right_col" role="main">
                     
-                  <?php 
-                        //Comento Dashboard
-                        if ($id_page == 'nb_maps_pg') 
-                       home();
-                    else{
-                  ?>        
                   <div class="">
                     
                     <div class="clearfix"></div>
@@ -215,10 +209,6 @@ class TemplatePage
                         
                           
                         <div class="x_panel">
-                        
-                            
-                            
-                            
                         <div class="x_title">
                             <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ 
                                     $linkProp=$this->objUtilities->getpagelink($_GET['p']);
@@ -231,8 +221,8 @@ class TemplatePage
                                  if ($id_page <> 'login'){
                               ?> 
                               <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                              <li><a class=""><i class="fa fa-info-circle"></i></a></li>
-                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                              <!--<li><a class=""><i class="fa fa-info-circle"></i></a></li>-->
+                              <!--<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>-->
                               <?php }?>      
                             </ul>
                             <?php if ($id_page <> 'login' and $id_page <> 'nb_user_new_pg' and $id_page <> 'nb_forg_pas_pg'){ ?>
@@ -253,6 +243,9 @@ class TemplatePage
                     
                     $style=$this->pageProperties['style'];
                     $trace=$this->pageProperties['trace'];
+                        
+                    if ($this->tipo == 'map')
+                       home();    
                     
                     if ($empresa=='')
                         $empresa='nabu';
@@ -293,7 +286,6 @@ class TemplatePage
                       </div>
                     </div>
                   </div>
-                  <?php } ?>    
                 </div>
                 <div align=center><?php 
                             if ($id_page == 'login'){
@@ -309,7 +301,7 @@ class TemplatePage
                                     </a>
                                     <br><br>--><br>
                                     <div class='made'>
-                                    <span>Hecho con <img src='../Images/hearth.png '> en Colombia</span>
+                                    <span>Hecho con <img id='madeHearth' src='../Images/hearth.png '> en Colombia</span>
                                     </div>
                                 ";
                                 

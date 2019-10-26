@@ -7,10 +7,21 @@
 	color:#fff;	
 	font-size:14px;
 	font-weight :bold;
-
 }
 
+#madeHearth{
+    width: 5%;
+}
 
+img{
+    width: auto;
+    height: auto;    
+}
+
+.mapboxgl-popup {
+   width: 100%;
+   height: 60%;
+}
 
 .formsSimple{
 	background-color:transparent;
@@ -26,14 +37,12 @@
 	font-weight : bold;
 }
 
-.homeImage{
-    width:100%;
-}
 
 @media screen and (max-width:760px) {
 
-    .homeImage{
-        width:24%;
+    img{
+        width: 100%;
+        height: auto;    
     }
     .formsSimple{
         background-color:transparent;

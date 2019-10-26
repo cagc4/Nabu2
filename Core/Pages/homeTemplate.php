@@ -5,22 +5,14 @@ function home(){
 ?>
          
 
-<head>
-<meta charset='utf-8' />
-
-<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
-
-</head>
-
-
 <style>
 .mapboxgl-popup {
 max-width: 400px;
 font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 </style>
+
+
 
 <div align='center'>
 <div id='map' style='width: 800px; height: 600px;'   ></div>
