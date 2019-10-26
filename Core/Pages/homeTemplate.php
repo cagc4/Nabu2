@@ -3,7 +3,8 @@
 function home(){
     
 ?>
-         
+
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
 <style>
 .mapboxgl-popup {
@@ -15,7 +16,7 @@ font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
 
 <div align='center'>
-<div id='map' style='width: 800px; height: 600px;'   ></div>
+    <div id='map' style='width:100%; height:500px;'   ></div>
 </div>
 
 
@@ -177,6 +178,7 @@ map.on('mouseleave', 'places', function () {
 map.getCanvas().style.cursor = '';
 });
         
+map.addControl(new mapboxgl.NavigationControl());
     
     });
              

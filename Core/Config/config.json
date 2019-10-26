@@ -1,7 +1,7 @@
 {
-    "hostname":"nabu2.c1oibmjbjx8i.us-east-2.rds.amazonaws.com",
-    "username":"admin",
-    "password":"4kvar4Martina",
+    "hostname":"localhost",
+    "username":"nabu",
+    "password":"6492496",
     "database":"nabu2",
     "token":"4kvar4",
     "encryptKey":"M4akrvtairn4a"
