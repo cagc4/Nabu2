@@ -22,6 +22,16 @@ font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
     
 <script>
+    
+    if ("geolocation" in navigator){ //check geolocation available 
+         navigator.geolocation.getCurrentPosition(function(position){ 
+             alert("Posicion Actual : "+position.coords.latitude+","+ position.coords.longitude);
+        });
+     }else{
+    console.log("Browser doesn't support geolocation!");
+}
+     
+    
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2FnYzQiLCJhIjoiY2syNTh5bDR4MDF0ejNjcWhseTEwd3o1YyJ9.zWCBnoPdqisqgGfnhx8tGQ';
     var map = new mapboxgl.Map({
     container: 'map',
